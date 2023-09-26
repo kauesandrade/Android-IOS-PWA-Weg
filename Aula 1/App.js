@@ -8,7 +8,7 @@ export default function App() {
   const[player2, setPlayer2] = useState("");
 
   const handleClick = (event) =>{
-    alert("Click")
+    alert(player1 + " X " + player2);
   }
 
   return (
