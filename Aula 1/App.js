@@ -1,24 +1,37 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import Home from './src/Home';
+import Jogo from './src/Jogo';
 
 export default function App() {
 
   const[player1, setPlayer1] = useState("");
   const[player2, setPlayer2] = useState("");
+  const[screen, setScreen] = useState("home");
 
-  const handleClick = (event) =>{
-    alert(player1 + " X " + player2);
+  const checkScreen = (screenName) => screenName === screen;
+
+  const setJogadores = (nome1, nome2) =>{
+    setPlayer1(nome1);
+    setPlayer2(nome2);
   }
+
+  const changeScreen = (newScreen) => setScreen(newScreen)
+
 
   return (
     <View style={styles.container}>
-      <Text>Nome: {player1} </Text>
-      <TextInput  style= {styles.input} placeholder = 'Player 1' onChangeText={setPlayer1}/>
-      <Text>Nome: {player2} </Text>
-      <TextInput  style= {styles.input} placeholder = 'Player 2' onChangeText={setPlayer2}/>
-      <Button title='Botão' onPress={handleClick}/>
       <StatusBar style="auto" />
+      {checkScreen("home") && 
+      (<Home 
+        mudarNomeJogadores = {setJogadores} 
+        changeScreen = {changeScreen}
+        />
+      )}
+      {checkScreen("jogo") && <Jogo 
+      changeScreen = {changeScreen}
+      />}
     </View>
   );
 }
@@ -38,17 +51,3 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
 });
-
-
-function myState (_state){
-
-  let state = _state
-
-  function setState(value){
-    state = value
-  }
-
-  return [state, setState];
-}
-
-const [nome, setNome] = myState ("Kauê");
