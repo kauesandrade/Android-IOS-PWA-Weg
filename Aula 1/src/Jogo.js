@@ -4,6 +4,16 @@ import { useState } from 'react';
 export default function Jogo(props){
 
     const [vez, setVez] = useState("player1");
+    const [tabuleiro, setTabuleiro] = useState([]);
+    const [jogadasRestantes, setJogadasRestantes] = useState(0);
+
+    setJogadasRestantes(9);
+
+    setTabuleiro([
+    ['', '', ''],
+    ['', '', ''],
+    ['', '', '']]);
+
 
     const[b1, setB1] = useState("");
     const[b2, setB2] = useState("");
@@ -24,8 +34,11 @@ export default function Jogo(props){
             MudaderVez();
             if(vez == "player1"){
                 setB1("X");
+                tabuleiro[0][0] = b1;
+
             }else{
-                setB1("O")
+                setB1("O");
+                tabuleiro[0][0] = b1;
             }
         }
     }
@@ -34,8 +47,10 @@ export default function Jogo(props){
             MudaderVez();
             if(vez == "player1"){
                 setB2("X");
+                tabuleiro[0][1] = b2;
             }else{
-                setB2("O")
+                setB2("O");
+                tabuleiro[0][1] = b2;
             }
         }
     }
@@ -44,8 +59,10 @@ export default function Jogo(props){
             MudaderVez();
             if(vez === "player1"){
                 setB3("X");
+                tabuleiro[0][2] = b3;
             }else{
                 setB3("O")
+                tabuleiro[0][2] = b3;
             }
         }
     }
@@ -54,8 +71,10 @@ export default function Jogo(props){
             MudaderVez();
             if(vez == "player1"){
                 setB4("X");
+                tabuleiro[1][0] = b4;
             }else{
-                setB4("O")
+                setB4("O");
+                tabuleiro[1][0] = b4;
             }
         }
     }
@@ -64,8 +83,10 @@ export default function Jogo(props){
             MudaderVez();
             if(vez == "player1"){
                 setB5("X");
+                tabuleiro[1][1] = b5;
             }else{
-                setB5("O")
+                setB5("O");
+                tabuleiro[1][1] = b5;
             }
         }
     }
@@ -74,8 +95,10 @@ export default function Jogo(props){
             MudaderVez();
             if(vez == "player1"){
                 setB6("X");
+                tabuleiro[1][2] = b6;
             }else{
-                setB6("O")
+                setB6("O");
+                tabuleiro[1][2] = b6;
             }
         }
     }
@@ -84,8 +107,10 @@ export default function Jogo(props){
             MudaderVez();
             if(vez == "player1"){
                 setB7("X");
+                tabuleiro[2][0] = b7;
             }else{
-                setB7("O")
+                setB7("O");
+                tabuleiro[2][0] = b7;
             }
         }
     }
@@ -94,8 +119,10 @@ export default function Jogo(props){
             MudaderVez();
             if(vez == "player1"){
                 setB8("X");
+                tabuleiro[2][1] = b8;
             }else{
-                setB8("O")
+                setB8("O");
+                tabuleiro[2][1] = b8;
             }
         }
     }
@@ -104,15 +131,13 @@ export default function Jogo(props){
             MudaderVez();
             if(vez == "player1"){
                 setB9("X");
+                tabuleiro[2][2] = b9;
             }else{
-                setB9("O")
+                setB9("O");
+                tabuleiro[2][2] = b9;
             }
         }
     }
-
-    const matriz = [3][3];
-    
-    matriz[0] = [b1, b2, b3];
     
 
     function MudaderVez(){
@@ -120,6 +145,21 @@ export default function Jogo(props){
             setVez("player1");
         }else if (vez == "player1"){
             setVez("player2");
+        }
+
+    }
+
+    function verificarJogo(){
+        if(jogadasRestantes <= 4){
+            for(let i =0; i > 2; i++){
+                for(let j =0; j > 2; j++){
+    
+                    if(tabuleiro[i][j] == tabuleiro[i][j+1] && tabuleiro[i+1][j]){
+                        console.log("foi")
+                    }
+    
+                }
+            }
         }
     }
 
