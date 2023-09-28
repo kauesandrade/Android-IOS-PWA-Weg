@@ -1,57 +1,31 @@
-import { useState } from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { View, Text, Button} from 'react-native-web';
 
-export default function Home({mudarNomeJogadores, changeScreen}) {
+export default function({
+    changeScreen,
+    setNextScreen
+}){
 
-  const[player1, setPlayer1] = useState("");
-  const[player2, setPlayer2] = useState("");
-
-  const handleClick = (event) =>{
-    
-    if(!player1 && !player2){
-        alert("Digite os nomes dos players para seguir");
+    const handleClickVelha = () =>{
+        changeScreen("escolherNomes");
+        setNextScreen("jgVelha");
     }
-    else if(!player1){
-        alert("digite o nome do player 1");
-    }else if (!player2){
-        alert("digite o nome do player 2");
-    }else{
-        alert(player1 + " X " + player2);
-        if(mudarNomeJogadores){
-            mudarNomeJogadores(player1, player2)
-            changeScreen("jogo")
-        }
+    const handleClickForca = () =>{
+        changeScreen("jgForca");
+    }
+    const handleClickMemoria = () =>{
+        changeScreen("escolherNomes");
+        setNextScreen("jgMemoria");
     }
 
- 
-   
-  }
+    return(
+        <View>
+            <Text>
+                Escolha seu minigame:
+            </Text>
 
-  return (
-    <View style={styles.container}>
-      <Text>Nome: {player1} </Text>
-      <TextInput  style= {styles.input} placeholder = 'Player 1' onChangeText={setPlayer1}/>
-      
-      <Text>Nome: {player2} </Text>
-      <TextInput  style= {styles.input} placeholder = 'Player 2' onChangeText={setPlayer2}/>
-      
-      <Button title='Botão' onPress={handleClick}/>
-    </View>
-  );
+            <Button title = "Jogo da Velha" onPress = {handleClickVelha}/>
+            <Button title = "Jogo da Forca" onPress = {handleClickForca}/>
+            <Button title = "Jogo da Memória" onPress = {handleClickMemoria}/>
+        </View>
+    )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  input: {
-    width: "80%",
-    height: 20,
-    borderStyle: "solid",
-    boderColor: "black",
-    borderWidth: 1,
-  },
-});
