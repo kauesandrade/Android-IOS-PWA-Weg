@@ -6,8 +6,14 @@ export default function({
     mudarPalavra
 }){
     const handleClickJogar = () =>{
-        mudarPalavra(palavra)
-        changeScreen("jgForca")
+
+        if(palavra.length != 0){
+            mudarPalavra(palavra)
+            changeScreen("jgForca")
+        }else{
+            alert("Digie um palavra para começar")
+        }
+
     }
 
     const handleClickVoltar = () =>{
