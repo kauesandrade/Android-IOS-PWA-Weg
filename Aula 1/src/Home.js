@@ -10,7 +10,7 @@ export default function({
         setNextScreen("jgVelha");
     }
     const handleClickForca = () =>{
-        changeScreen("jgForca");
+        changeScreen("escolherPalavra");
     }
     const handleClickMemoria = () =>{
         changeScreen("escolherNomes");

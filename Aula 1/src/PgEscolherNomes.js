@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
 
-export default function Home({mudarNomeJogadores, changeScreen}) {
+export default function Home({mudarNomeJogadores, changeScreen, nextScreen}) {
 
   const[player1, setPlayer1] = useState("");
   const[player2, setPlayer2] = useState("");
@@ -18,8 +18,7 @@ export default function Home({mudarNomeJogadores, changeScreen}) {
     }else{
         alert(player1 + " X " + player2);
         if(mudarNomeJogadores){
-          mudarNomeJogadores(player1, player2)
-          //PRECISO IMPORTAR O NEXTTELA QUE TA NO APP
+          mudarNomeJogadores(player1, player2);
           changeScreen(nextScreen)
         }
     }
