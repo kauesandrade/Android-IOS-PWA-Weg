@@ -36,7 +36,7 @@ export default function Home({mudarNomeJogadores, changeScreen, nextScreen}) {
       <Text>Nome: {player2} </Text>
       <TextInput  style= {styles.input} placeholder = 'Player 2' onChangeText={setPlayer2}/>
       
-      <Button title='Botão' onPress={handleClickJogar}/>
+      <Button title='Jogar' onPress={handleClickJogar}/>
 
       <Button title='Voltar para o menu' onPress={handleClickVoltar}/>
     </View>
