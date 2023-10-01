@@ -20,6 +20,8 @@ export default function({
             if(chute && !letrasEscolhidas.includes(chute)){
                 setLetrasEscolhidas([...letrasEscolhidas, chute])
                 console.log(letrasEscolhidas)
+            }else{
+                alert("Você já chutou a letra: "+chute)
             }
         }
     }
