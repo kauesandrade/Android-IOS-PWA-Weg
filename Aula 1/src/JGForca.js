@@ -34,11 +34,15 @@ export default function({
             if(chute && !letrasEscolhidas.includes(chute)){
                 setLetrasEscolhidas([...letrasEscolhidas, chute])
                 console.log(letrasEscolhidas)
+                if (!word.includes(guess)) {
+                    setTentativas(tentativas - 1);
+                }
+
             }else{
                 alert("Você já chutou a letra: "+chute)
             }
         }else if(chute.length > 1){
-            if(chute == palavra){
+            if(chute != palavra){
                 setTentativas(tentativas-1)
             }
         }
@@ -61,7 +65,7 @@ export default function({
 
         <TextInput placeholder ="Chute" onChangeText = {setChute}/>
 
-        <Text>${tentativas}</Text> 
+        <Text>{tentativas}</Text> 
 
         <Button title="Chutar" onPress={handleClickChutar}/>
         <Button title="Voltar" onPress={handleClickVoltar}/>
