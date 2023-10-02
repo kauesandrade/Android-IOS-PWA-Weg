@@ -63,9 +63,13 @@ export default function({
             <Text key={indexLetra}>{letra}</Text>
         ))}
 
-        <TextInput placeholder ="Chute" onChangeText = {setChute}/>
+        <Text>{tentativas}</Text>
 
-        <Text>{tentativas}</Text> 
+        {letrasEscolhidas.map((letra, indexLetra) => (
+            <Text key={indexLetra}>{letra}</Text>
+        ))}
+
+        <TextInput placeholder ="Chute" onChangeText = {setChute}/>
 
         <Button title="Chutar" onPress={handleClickChutar}/>
         <Button title="Voltar" onPress={handleClickVoltar}/>
