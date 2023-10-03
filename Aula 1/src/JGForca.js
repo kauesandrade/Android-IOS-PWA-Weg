@@ -50,8 +50,8 @@ export default function({
 
     const mascaraPalavra = palavra.split('').map((letra) => (
         letrasEscolhidas.includes(letra) ? letra : '_')
-        ).join('');
-    
+    ).join('');
+
 
     return(
     <View>
