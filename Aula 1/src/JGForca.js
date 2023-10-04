@@ -28,13 +28,12 @@ export default function({
         changeScreen("escolherPalavra");
     }
 
-    const  handleClickChutar = () => {
+    const handleClickChutar = () => {
 
         if(chute.length == 1){
             if(chute && !letrasEscolhidas.includes(chute)){
                 setLetrasEscolhidas([...letrasEscolhidas, chute])
-                console.log(letrasEscolhidas)
-                if (!word.includes(guess)) {
+                if (!letrasEscolhidas.includes(chute) && !palavra.includes(chute)) {
                     setTentativas(tentativas - 1);
                 }
 
@@ -43,37 +42,72 @@ export default function({
             }
         }else if(chute.length > 1){
             if(chute != palavra){
-                setTentativas(tentativas-1)
+                const [tentativasN, setTentativasN] = useState(tentativas)
+                setTentativas(tentativasN-1)
             }
         }
+
+        setChute("");
+
     }
 
     const mascaraPalavra = palavra.split('').map((letra) => (
         letrasEscolhidas.includes(letra) ? letra : '_')
     ).join('');
 
-
-    return(
-    <View>
-        <Text>
-            Jogo da Forca
-        </Text>
-
-        {mascaraPalavra.split("").map((letra, indexLetra) => (
-            <Text key={indexLetra}>{letra}</Text>
-        ))}
-
-        <Text>{tentativas}</Text>
-
-        {letrasEscolhidas.map((letra, indexLetra) => (
-            <Text key={indexLetra}>{letra}</Text>
-        ))}
-
-        <TextInput placeholder ="Chute" onChangeText = {setChute}/>
-
-        <Button title="Chutar" onPress={handleClickChutar}/>
-        <Button title="Voltar" onPress={handleClickVoltar}/>
-
-    </View>
-    )
-}
+    return (
+        <View style={styles.container}>
+          <Text style={styles.header}>Jogo da Forca</Text>
+          <Text style={styles.tries}>Tentativas restantes: {tentativas}</Text>
+          <Text style={styles.word}>Chutes: {letrasEscolhidas}</Text>
+          <Text style={styles.word}>Palavra: {mascaraPalavra}</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Digite uma letra"
+            value={chute}
+            onChangeText={(text) => setChute(text)}
+          />
+          <Button title="Adivinhar" onPress={handleClickChutar} />
+          <Button title="Voltar" onPress={handleClickVoltar}/>
+        </View>
+      );
+    };
+    
+    // const App = () => {
+    //   return (
+    //     <PaperProvider>
+    //       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    //         <HangmanGame />
+    //       </View>
+    //     </PaperProvider>
+    //   );
+    // };
+    
+    const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      header: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+      },
+      tries: {
+        fontSize: 18,
+        marginBottom: 10,
+      },
+      word: {
+        fontSize: 24,
+        marginBottom: 20,
+      },
+      input: {
+        borderWidth: 1,
+        borderColor: 'black',
+        width: 200,
+        fontSize: 16,
+        padding: 5,
+        marginBottom: 10,
+      },
+    });

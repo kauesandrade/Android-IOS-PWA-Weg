@@ -1,80 +1,109 @@
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native-web';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-const tabuleiro = [['','','','',''],['','','','',''],['','','','',''],['','','','',''],['','','','',''],]
+const numPares = 25
+const cardsArray = Array(numPares * 2)
+  .fill(null)
+  .map((_, index) => index);
+const enbaralharArr = (array) => array.sort(() => Math.random() - 0.5);
 
 export default function({
     changeScreen,
     player1,
     player2
 }){
+    const [cards, setCards] = useState([]);
+    const [cardsArr, setCardsArr] = useState({cardId: 1, ok: false},
+        {cardId: 2, ok: false},
+        {cardId: 3, ok: false});
+    const [cardsSelecionados, setCardsSelecionados] = useState([]);
+    const [playerVez, setPlayerVez] = useState("1");
 
-    const [state, setState] = useState(tabuleiro);
+    const iniciarJogo = () =>{
 
-    this.cards = [
-        {Card: 1, figura: "A", mostrado: false, ok: false},
-        {Card: 2, figura: "B", mostrado: false, ok: false},
-        {Card: 3, figura: "C", mostrado: false, ok: false},
-        {Card: 4, figura: "D", mostrado: false, ok: false},
-        {Card: 5, figura: "F", mostrado: false, ok: false},
-        {Card: 6, figura: "G", mostrado: false, ok: false},
-        {Card: 7, figura: "H", mostrado: false, ok: false},
-        {Card: 8, figura: "I", mostrado: false, ok: false},
-        {Card: 9, figura: "J", mostrado: false, ok: false},
-        {Card: 10, figura: "K", mostrado: false, ok: false},
-        {Card: 11, figura: "L", mostrado: false, ok: false},
-        {Card: 12, figura: "M", mostrado: false, ok: false},
-        {Card: 13, figura: "N", mostrado: false, ok: false},
-        {Card: 14, figura: "O", mostrado: false, ok: false},
-        {Card: 15, figura: "P", mostrado: false, ok: false},
-        {Card: 16, figura: "Q", mostrado: false, ok: false},
-        {Card: 17, figura: "R", mostrado: false, ok: false},
-        {Card: 18, figura: "S", mostrado: false, ok: false},
-        {Card: 19, figura: "T", mostrado: false, ok: false},
-        {Card: 20, figura: "U", mostrado: false, ok: false},
-        {Card: 21, figura: "V", mostrado: false, ok: false},
-        {Card: 22, figura: "W", mostrado: false, ok: false},
-        {Card: 23, figura: "X", mostrado: false, ok: false},
-        {Card: 24, figura: "Y", mostrado: false, ok: false},
-        {Card: 25, figura: "Z", mostrado: false, ok: false}
-    ]
+        const criadoArray = criarArray(cardsArr);
+        setCardsArr = (criadoArray);
+        setCards = ([...cardsArr, ...cardsArr])
+        setCardsSelecionados([])
+        setPlayerVez("1")
+    }
 
-    const handleClickPosicao = (linha, coluna) => {
-        if
+    useEffect(() =>{
+        iniciarJogo();
+    },[]);
 
+    const handlepress = (cardIndex) =>{
+        if(cardsSelecionados == 1){
+            return;
+        }
+        
+        setCardsSelecionados[[...cardsSelecionados, cardIndex]]
 
-    } 
+        if(cardsSelecionados.length == 2){
+            if(cards[cardsSelecionados[0]] === cardIndex){
+
+            }
+        }
+    }
 
 
-
-
-    return(
-    <View>
-
-    </View>
-    )
-
-    
-
-    
+ const cardContainer = () =>{
+    return cards.map((card, index) => (
+        <TouchableOpacity
+          key={index}
+          style={styles.card}
+          onPress={() => handleCardPress(index)}
+          disabled={selectedCards.includes(index)}
+        >
+          <Text style={styles.cardText}>
+            {selectedCards.includes(index) || card === null ? ' ' : String(card)}
+          </Text>
+        </TouchableOpacity>
+    ));
+  
+ }
+   
 }
 
 const styles = StyleSheet.create({
-    linha: {
-      display: "flex",
-     flexDirection: "row"
-    },
-    botaoJogo: {
-        backgroundColor: 'red',
-        width: 80,
-        height: 80,
-        margin: 2,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    botaoJogoFonte: {
-      fontSize: 50,
-      color: "#fff"
-    }
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+  },
+  players: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 20,
+  },
+  player: {
+    fontSize: 18,
+  },
+  activePlayer: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  cardContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    width: 300,
+  },
+  card: {
+    width: 60,
+    height: 60,
+    margin: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'lightblue',
+  },
+  cardText: {
+    fontSize: 20,
+  },
+  resetButton: {
+    marginTop: 20,
+  },
 });
