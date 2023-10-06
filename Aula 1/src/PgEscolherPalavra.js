@@ -29,7 +29,7 @@ export default function({
             </Text>
             <TextInput placeholder='digite um palavra' onChangeText={setPalavra}/>
             <Button title='Jogar' onPress={handleClickJogar}/>
-            <Button title='Volar para o menu' onPress={handleClickVoltar}/>
+            <Button title='Voltar para o menu' onPress={handleClickVoltar}/>
 
         </View>
     )

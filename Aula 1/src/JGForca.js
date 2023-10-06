@@ -34,11 +34,11 @@ export default function({
             if(chute && !letrasEscolhidas.includes(chute)){
                 setLetrasEscolhidas([...letrasEscolhidas, chute])
                 if (!letrasEscolhidas.includes(chute) && !palavra.includes(chute)) {
-                    setTentativas(tentativas - 1);
-                }
+                setTentativas(tentativas - 1);
+              }
 
             }else{
-                alert("Você já chutou a letra: "+chute)
+              alert("Você já chutou a letra: "+chute)
             }
         }else if(chute.length > 1){
             if(chute != palavra){
@@ -47,12 +47,12 @@ export default function({
             }
         }
 
-        setChute("");
+      setChute("");
 
     }
 
     const mascaraPalavra = palavra.split('').map((letra) => (
-        letrasEscolhidas.includes(letra) ? letra : '_')
+      letrasEscolhidas.includes(letra) ? letra : '_')
     ).join('');
 
     return (

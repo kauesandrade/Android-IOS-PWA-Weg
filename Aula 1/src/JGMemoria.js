@@ -1,109 +1,65 @@
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native-web';
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
+import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native-web";
 
-const numPares = 25
-const cardsArray = Array(numPares * 2)
-  .fill(null)
-  .map((_, index) => index);
-const enbaralharArr = (array) => array.sort(() => Math.random() - 0.5);
+const tabuleiro = [
+["", "", "", "", ""], 
+["", "", "", "", ""], 
+["", "", "", "", ""], 
+["", "", "", "", ""], 
+["", "", "", "", ""],]
+
+const cards = ["🥐","🍔","🍕","🌭","🍟","🥓","🥨","🥟","🥩","🍧","🍣","🧀","🥮","🍤","🍪","🍮","🎂","🍬","🍭","🍯","☕","🥪","🍍","🍇","🥝"]
+// const cards = [["🥐"],["🍔"],["🍕"],["🌭"],["🍟"],["🥓"],["🥨"],["🥟"],["🥩"],["🍧"],["🍣"],["🧀"],["🥮"],["🍤"],["🍪"],["🍮"],["🎂"],["🍬"],["🍭"],["🍯"],["☕"],["🥪"],["🍍"],["🍇"],["🥝"]]
 
 export default function({
-    changeScreen,
-    player1,
-    player2
+  changeScreen,
+  nextScreen,
+  player1,
+  player2
 }){
-    const [cards, setCards] = useState([]);
-    const [cardsArr, setCardsArr] = useState({cardId: 1, ok: false},
-        {cardId: 2, ok: false},
-        {cardId: 3, ok: false});
-    const [cardsSelecionados, setCardsSelecionados] = useState([]);
-    const [playerVez, setPlayerVez] = useState("1");
-
-    const iniciarJogo = () =>{
-
-        const criadoArray = criarArray(cardsArr);
-        setCardsArr = (criadoArray);
-        setCards = ([...cardsArr, ...cardsArr])
-        setCardsSelecionados([])
-        setPlayerVez("1")
-    }
-
-    useEffect(() =>{
-        iniciarJogo();
-    },[]);
-
-    const handlepress = (cardIndex) =>{
-        if(cardsSelecionados == 1){
-            return;
-        }
-        
-        setCardsSelecionados[[...cardsSelecionados, cardIndex]]
-
-        if(cardsSelecionados.length == 2){
-            if(cards[cardsSelecionados[0]] === cardIndex){
-
-            }
-        }
-    }
 
 
- const cardContainer = () =>{
-    return cards.map((card, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.card}
-          onPress={() => handleCardPress(index)}
-          disabled={selectedCards.includes(index)}
-        >
-          <Text style={styles.cardText}>
-            {selectedCards.includes(index) || card === null ? ' ' : String(card)}
-          </Text>
-        </TouchableOpacity>
-    ));
+  const [state, setState] = useState(tabuleiro);
+  const [vez, setVez] = useState(player1);
+  const [selectCard, setSelectCard] = useState([]);
+  const [selectCard2, setSelectCard2] = useState([]);
+  const [allCards, setAllcards] = useState([...cards, ...cards]);
+  const [jogada, setJogada] = useState(0);
+  const [pontos, setPontos] = useState([0,0]);
+
   
- }
-   
-}
+  const verificarJogada = () =>{
+    
+    if(selectCard2[0] === selectCard[0] ){
+      vez === player1 ? setPontos([pontos[0] + 1, pontos[1]]) : setPontos([pontos[0], pontos[1] + 1])
+    }
+  }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 24,
-    marginBottom: 20,
-  },
-  players: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    marginBottom: 20,
-  },
-  player: {
-    fontSize: 18,
-  },
-  activePlayer: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  cardContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    width: 300,
-  },
-  card: {
-    width: 60,
-    height: 60,
-    margin: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'lightblue',
-  },
-  cardText: {
-    fontSize: 20,
-  },
-  resetButton: {
-    marginTop: 20,
-  },
-});
+  const handleClickPosicao = (index, linha, coluna) =>{
+
+    const novoState = [[...state[0]], [...state[1]], [...state[2]], [...state[4]], [...state[5]]]
+
+    if(state[linha][coluna] !== ""){
+      return;
+    }
+    else if(state[linha][coluna] === "" && jogada == 0){
+      setJogada(1);
+      novoState[linha][coluna] == allCards[linha*coluna];
+      setSelectCard([index, linha, coluna]);
+      setState(novoState);
+
+    }else if (state[linha][coluna] === "" && jogada === 1){
+      setJogada(0);
+      novoState[linha][coluna] == allCards[linha * coluna];
+      setState(novoState);
+      setSelectCard2([index, linha, coluna]);
+      verificarJogada();
+    }
+
+    
+  }
+
+
+
+
+}
