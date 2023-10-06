@@ -25,7 +25,7 @@ export default function({
 
 
     const handleClickVoltar = () => {
-        changeScreen("escolherPalavra");
+      changeScreen("escolherPalavra");
     }
 
     const handleClickChutar = () => {
