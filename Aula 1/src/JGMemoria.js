@@ -11,21 +11,17 @@ const tabuleiro = [
   ["", "", "", "", ""],
   ["", "", "", "", ""],
   ["", "", "", "", ""],
-  ["", "", "", "", ""]]
-
-  // OLHAR CODIGO DO WINTER PARA VER COMO REOGANIZAR AS CARTAS
+  ["", "", "", "", ""]
+]
 
 const cards = ["🥐", "🍔", "🍕", "🌭", "🍟", "🥓", "🥨", "🥟", "🥩", "🍧", "🍣", "🧀", "🥮", "🍤", "🍪", "🍮", "🎂", "🍬", "🍭", "🍯", "☕", "🥪", "🍍", "🍇", "🥝"]
-// const cards = [["🥐"],["🍔"],["🍕"],["🌭"],["🍟"],["🥓"],["🥨"],["🥟"],["🥩"],["🍧"],["🍣"],["🧀"],["🥮"],["🍤"],["🍪"],["🍮"],["🎂"],["🍬"],["🍭"],["🍯"],["☕"],["🥪"],["🍍"],["🍇"],["🥝"]]
 
 export default function ({
   changeScreen,
-  nextScreen,
   player1,
   player2
   
 }) {
-
 
   const [state, setState] = useState([...tabuleiro]);
   const [vez, setVez] = useState(player1);
@@ -35,24 +31,39 @@ export default function ({
   const [jogada, setJogada] = useState(0);
   const [pontos, setPontos] = useState([-1, 0]);
 
+  let randomcards = Math.floor(Math.random() * allCards.length);
+  let selectedCardRandom = allCards[randomcards];
+  setAllcards(selectedCardRandom);
 
   useEffect(() => {
     console.log("Card1 "+ selectCard[0], selectCard[1])
     console.log("Card2 "+ selectCard2[0], selectCard2[1])
-    console.log("All cards " + allCards[selectCard[0]+selectCard[1]] + " / " + allCards[selectCard2[0]+selectCard2[1]])
+    console.log("All cards " + allCards[((selectCard[0]) * 5) + (selectCard[1])] + " / " + allCards[((selectCard2[0]) * 5) + (selectCard2[1])])
   }, [selectCard, selectCard2]) 
 
   useEffect(() => {
-    verificarJogada();
+    setTimeout(() => { 
+      verificarJogada();
+    }, 700)
   }, [selectCard2]);
 
 
   useEffect(() => {
-    pontos[0] + pontos[1] == 25 ? console("acabou") : console.log(pontos[0] + pontos[1]);
+    vericarWin();
   }, [pontos])
 
+  const vericarWin = () =>{
+    if(pontos[0] + pontos[1] == 25){
+      pontos[0] > pontos[1] ? acabou(`Jogador ${player1} venceu!!`) : acabou(`Jogador ${player2} venceu!!`)
+    }
+  }
 
-
+  const acabou = (mensagem) =>{
+    alert(mensagem);
+    setState(tabuleiro);
+    getRandomCards();
+    voltar();
+  }
 
   const mudarVez = () => {
     vez == player1 ? setVez(player2) : setVez(player1);
@@ -60,16 +71,16 @@ export default function ({
 
   const verificarJogada = () => {
 
-    if (allCards[(selectCard[0] + 1) * (selectCard[1] + 1) - 1] === allCards[(selectCard2[0] + 1) * (selectCard2[1] + 1) - 1]) {
+    if (allCards[((selectCard[0]) * 5) + (selectCard[1])] === allCards[((selectCard2[0]) * 5) + (selectCard2[1])]) {
       vez == player1 ? setPontos([pontos[0] + 1, pontos[1]]) : setPontos([pontos[0], pontos[1] + 1])
     }
 
     else {
       const novoState = [[...state[0]], [...state[1]], [...state[2]], [...state[3]], [...state[4]], [...state[5]], [...state[6]], [...state[7]], [...state[8]], [...state[9]]]
-      
+
+
       novoState[selectCard[0]][selectCard[1]] = ""
       novoState[selectCard2[0]][selectCard2[1]] = ""
-
       setState(novoState)
       mudarVez();
     }
@@ -77,7 +88,7 @@ export default function ({
 
   const handleClickPosicao = (linha, coluna) => {
     const novoState = [[...state[0]], [...state[1]], [...state[2]], [...state[3]], [...state[4]], [...state[5]], [...state[6]], [...state[7]], [...state[8]], [...state[9]]]
-    novoState[linha][coluna] = allCards[(linha + 1) * (coluna + 1) - 1];
+    novoState[linha][coluna] = allCards[((linha) * 5) + (coluna)];
     setState([...novoState]);
     if (state[linha][coluna] != "") {
       return;
@@ -145,15 +156,15 @@ const styles = StyleSheet.create({
   },
   botaoJogo: {
     backgroundColor: 'red',
-    width: 80,
-    height: 80,
+    width: 40,
+    height: 40,
     margin: 2,
     display: "flex",
     justifyContent: "center",
     alignItems: "center"
   },
   botaoJogoFonte: {
-    fontSize: 50,
+    fontSize: 25,
     color: "#fff"
   }
 });
