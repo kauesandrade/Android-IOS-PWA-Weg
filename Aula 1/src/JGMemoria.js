@@ -33,7 +33,7 @@ export default function ({
   const [selectCard2, setSelectCard2] = useState([0,0]);
   const [allCards, setAllcards] = useState([...cards, ...cards]);
   const [jogada, setJogada] = useState(0);
-  const [pontos, setPontos] = useState([0, 0]);
+  const [pontos, setPontos] = useState([-1, 0]);
 
 
   useEffect(() => {
@@ -45,59 +45,43 @@ export default function ({
   useEffect(() => {
     verificarJogada();
   }, [selectCard2]);
-  useEffect(() => {
-    pontos[0] + pontos[1] == 25 ? console("acabou") : console.log(pontos[0] + pontos[1]);
-  }, [pontos]) 
+
 
   useEffect(() => {
-    console.log("dadda")
-  }, [state]) 
+    pontos[0] + pontos[1] == 25 ? console("acabou") : console.log(pontos[0] + pontos[1]);
+  }, [pontos])
 
 
 
 
   const mudarVez = () => {
-    vez == player1 ? setVez(player2) : setVez(player2);
-
+    vez == player1 ? setVez(player2) : setVez(player1);
   }
 
   const verificarJogada = () => {
 
     if (allCards[(selectCard[0] + 1) * (selectCard[1] + 1) - 1] === allCards[(selectCard2[0] + 1) * (selectCard2[1] + 1) - 1]) {
       vez == player1 ? setPontos([pontos[0] + 1, pontos[1]]) : setPontos([pontos[0], pontos[1] + 1])
-      mudarVez();
     }
+
     else {
       const novoState = [[...state[0]], [...state[1]], [...state[2]], [...state[3]], [...state[4]], [...state[5]], [...state[6]], [...state[7]], [...state[8]], [...state[9]]]
-      
-      console.log("Antes")
-      console.log(novoState[selectCard[0]][selectCard[1]])
-      console.log(novoState[selectCard2[0]][selectCard2[1]])
       
       novoState[selectCard[0]][selectCard[1]] = ""
       novoState[selectCard2[0]][selectCard2[1]] = ""
 
-      console.log("depois")
-      console.log(novoState[selectCard[0]][selectCard[1]])
-      console.log(novoState[selectCard2[0]][selectCard2[1]])
-
       setState(novoState)
-      console.log(novoState)
-      console.log(state)
+      mudarVez();
     }
   }
 
   const handleClickPosicao = (linha, coluna) => {
-
-    
     const novoState = [[...state[0]], [...state[1]], [...state[2]], [...state[3]], [...state[4]], [...state[5]], [...state[6]], [...state[7]], [...state[8]], [...state[9]]]
     novoState[linha][coluna] = allCards[(linha + 1) * (coluna + 1) - 1];
     setState([...novoState]);
     if (state[linha][coluna] != "") {
       return;
     }
-    
-
     else if (jogada == 0) {
       setJogada(1);
       setSelectCard([linha, coluna]);
@@ -106,10 +90,18 @@ export default function ({
       setJogada(0);
       setSelectCard2([linha, coluna]);
     }
+  }
 
-    
+  const voltar = () =>{
+    changeScreen("escolherNomes")
+  }
 
-
+  const getSituacao = () =>{
+    if(vez == player1){
+      return "Vez do jogador: "+ player1
+    }else{
+      return "Vez do jogador: "+ player2
+    }
   }
 
   return (
@@ -117,10 +109,13 @@ export default function ({
       <Text>
         Jogo da Velha
       </Text>
-      {/* <Text>
-            Vez do jogador: {getPlayerName()} - {vez}
-        </Text> */}
-      {/* <Button title='Voltar' onPress={voltar} /> */}
+      <Button title='Voltar' onPress={() => voltar()} />
+      <Text>
+        {getSituacao()}
+      </Text>
+      <Text>
+        Pontos: {player1} : {pontos[0]} X {player2} : {pontos[1]}
+      </Text>
       {
         state.map((linha, indexLinha) => {
           return (
