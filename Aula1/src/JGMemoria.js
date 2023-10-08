@@ -31,9 +31,8 @@ export default function ({
   const [jogada, setJogada] = useState(0);
   const [pontos, setPontos] = useState([-1, 0]);
 
-  // const randomcards = Math.floor(Math.random() * allCards.length);
-  // const selectedCardRandom = allCards[randomcards];
-  // setAllcards(selectedCardRandom);
+  const randomcards = Math.floor(Math.random() * allCards.length);
+  setAllcards[randomcards]
 
   useEffect(() => {
     console.log("Card1 "+ selectCard[0], selectCard[1])

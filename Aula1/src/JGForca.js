@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text, Button, TextInput,  StyleSheet} from 'react-native-web';
+import { View, Text, Button, TextInput,  StyleSheet, Image} from 'react-native-web';
 
 export default function({
     changeScreen,
@@ -8,18 +8,64 @@ export default function({
     const [tentativas, setTentativas] = useState(6)
     const [letrasEscolhidas, setLetrasEscolhidas] = useState([]);
     const [chute, setChute] = useState("");
+    const [image, setImagem] = useState('./imgs/img0.png')
 
     useEffect(() =>{
-        verificarWin();
-    })  
+      verificarWin();
+    }, [letrasEscolhidas])
+    
+    useEffect(() =>{
+      verificarImagem();
+    }, [tentativas])
+
+
+    const mascaraPalavra = palavra.split('').map((letra) => {
+
+      if(letrasEscolhidas.includes(letra)){
+        return letra;
+      }else if(letra == " "){
+        return '-'
+      }else{
+        return '_'
+      }
+
+    }).join(' ')
+
+    const palavraVerificar = palavra.split('').map((letra) =>(
+      letra == " " ? "-" : letra
+    )).join(' ');
+
+    const verificarImagem = () =>{
+      if(tentativas == 5){
+        setImagem('./imgs/img1.png')
+      }
+      if(tentativas == 4){
+        setImagem('./imgs/img2.png')
+      }
+      if(tentativas == 3){
+        setImagem('./imgs/img3.png')
+      }
+      if(tentativas == 2){
+        setImagem('./imgs/img4.png')
+      }
+      if(tentativas == 1){
+        setImagem('./imgs/img5.png')
+      }
+      if(tentativas == 0){
+        setImagem('./imgs/img6.png')
+      }
+    }
 
     const verificarWin = () =>{
-        if(palavra == mascaraPalavra || palavra == chute){
+        if(palavraVerificar == mascaraPalavra || palavra == chute){
             alert("Parabéns você ganhou!!!");
             handleClickVoltar();
         }else if(tentativas == 0){
-            alert("Não foi dessa vez, a palavra era: "+palavra);
+            setTimeout (() =>{
+              alert("Não foi dessa vez, a palavra era: "+palavra);
             changeScreen("escolherPalavra");
+          }, 500)
+           
         }
     }
 
@@ -32,8 +78,8 @@ export default function({
 
         if(chute.length == 1){
             if(chute && !letrasEscolhidas.includes(chute)){
-                setLetrasEscolhidas([...letrasEscolhidas, chute])
-                if (!letrasEscolhidas.includes(chute) && !palavra.includes(chute)) {
+              setLetrasEscolhidas([...letrasEscolhidas, chute])
+              if (!letrasEscolhidas.includes(chute) && !palavra.includes(chute)) {
                 setTentativas(tentativas - 1);
               }
 
@@ -42,8 +88,9 @@ export default function({
             }
         }else if(chute.length > 1){
             if(chute != palavra){
-                const [tentativasN, setTentativasN] = useState(tentativas)
-                setTentativas(tentativasN-1)
+                setTentativas(tentativas-1)
+            }else{
+              verificarWin();
             }
         }
 
@@ -51,13 +98,15 @@ export default function({
 
     }
 
-    const mascaraPalavra = palavra.split('').map((letra) => (
-      letrasEscolhidas.includes(letra) ? letra : '_')
-    ).join('');
-
     return (
         <View style={styles.container}>
           <Text style={styles.header}>Jogo da Forca</Text>
+          
+          <Image
+            style={styles.hangMan}
+            source = {require(""+image)}
+          />
+
           <Text style={styles.tries}>Tentativas restantes: {tentativas}</Text>
           <Text style={styles.word}>Chutes: {letrasEscolhidas}</Text>
           <Text style={styles.word}>Palavra: {mascaraPalavra}</Text>
@@ -72,16 +121,6 @@ export default function({
         </View>
       );
     };
-    
-    // const App = () => {
-    //   return (
-    //     <PaperProvider>
-    //       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-    //         <HangmanGame />
-    //       </View>
-    //     </PaperProvider>
-    //   );
-    // };
     
     const styles = StyleSheet.create({
       container: {
@@ -109,5 +148,9 @@ export default function({
         fontSize: 16,
         padding: 5,
         marginBottom: 10,
+      },
+      hangMan: {
+        width: 250,
+        height: 250,
       },
     });
