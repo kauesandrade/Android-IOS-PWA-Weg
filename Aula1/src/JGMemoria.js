@@ -24,14 +24,14 @@ export default function ({
 }) {
 
   const [state, setState] = useState([...tabuleiro]);
-  const [vez, setVez] = useState(player1);
+  const [vez, setVez] = useState();
   const [selectCard, setSelectCard] = useState([0,0]);
   const [selectCard2, setSelectCard2] = useState([0,0]);
   const [allCards, setAllcards] = useState([...cards, ...cards]);
   const [jogada, setJogada] = useState(0);
   const [pontos, setPontos] = useState([-1, 0]);
 
-  setAllcards(allCards[Math.floor(Math.random() * allCards.length)]);
+  // FAZER RANDOMIZAÇÂO APENAS
 
 
   useEffect(() => {
