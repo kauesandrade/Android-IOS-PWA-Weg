@@ -13,7 +13,6 @@ const tabuleiro = [
   ["", "", "", "", ""],
   ["", "", "", "", ""]
 ]
-
 const cards = ["🥐", "🍔", "🍕", "🌭", "🍟", "🥓", "🥨", "🥟", "🥩", "🍧", "🍣", "🧀", "🥮", "🍤", "🍪", "🍮", "🎂", "🍬", "🍭", "🍯", "☕", "🥪", "🍍", "🍇", "🥝"]
 
 export default function ({
@@ -29,10 +28,14 @@ export default function ({
   const [selectCard2, setSelectCard2] = useState([0,0]);
   const [allCards, setAllcards] = useState([...cards, ...cards]);
   const [jogada, setJogada] = useState(0);
-  const [pontos, setPontos] = useState([-1, 0]);
+  const [pontos, setPontos] = useState([0, -1]);
+  const [podeJogar, setPodeJogar] = useState(true);
 
-  // FAZER RANDOMIZAÇÂO APENAS
 
+  useEffect(() => {
+    const shuffledCards = [...cards, ...cards].sort(() => Math.random() - 0.5);
+    setAllcards(shuffledCards);
+  }, []);
 
   useEffect(() => {
     console.log("Card1 "+ selectCard[0], selectCard[1])
@@ -43,6 +46,7 @@ export default function ({
   useEffect(() => {
     setTimeout(() => { 
       verificarJogada();
+      setPodeJogar(true);
     }, 700)
   }, [selectCard2]);
 
@@ -86,19 +90,24 @@ export default function ({
   }
 
   const handleClickPosicao = (linha, coluna) => {
-    const novoState = [[...state[0]], [...state[1]], [...state[2]], [...state[3]], [...state[4]], [...state[5]], [...state[6]], [...state[7]], [...state[8]], [...state[9]]]
-    novoState[linha][coluna] = allCards[((linha) * 5) + (coluna)];
-    setState([...novoState]);
+
+    if(podeJogar == true){
+      const novoState = [[...state[0]], [...state[1]], [...state[2]], [...state[3]], [...state[4]], [...state[5]], [...state[6]], [...state[7]], [...state[8]], [...state[9]]]
+      novoState[linha][coluna] = allCards[((linha) * 5) + (coluna)];
+      setState([...novoState]);
+    }
+   
     if (state[linha][coluna] != "") {
       return;
     }
-    else if (jogada == 0) {
+    else if (jogada == 0 && podeJogar == true) {
       setJogada(1);
       setSelectCard([linha, coluna]);
     }
-    else if (jogada == 1) {
+    else if (jogada == 1 && podeJogar == true) {
       setJogada(0);
       setSelectCard2([linha, coluna]);
+      setPodeJogar(false)
     }
   }
 
