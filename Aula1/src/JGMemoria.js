@@ -23,12 +23,12 @@ export default function ({
 }) {
 
   const [state, setState] = useState([...tabuleiro]);
-  const [vez, setVez] = useState();
+  const [vez, setVez] = useState(player1);
   const [selectCard, setSelectCard] = useState([0,0]);
   const [selectCard2, setSelectCard2] = useState([0,0]);
   const [allCards, setAllcards] = useState([...cards, ...cards]);
   const [jogada, setJogada] = useState(0);
-  const [pontos, setPontos] = useState([0, -1]);
+  const [pontos, setPontos] = useState([-1, 0]);
   const [podeJogar, setPodeJogar] = useState(true);
 
 

@@ -18,39 +18,21 @@ export default function ({
     }
 
     return (
-        <View >
+        <View style={styles.div} >
             <Text>
                 Escolha seu minigame:
             </Text>
-            {/* <View>
-                <TouchableOpacity onPress={handleClickVelha}>
-                    <View style={styles.botao}>
-                        <Text>
-                            Jogo da Velha
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-            </View> */}
-
-
-
-
-            <Button color="#3bcbdb" title="Jogo da Velha" onPress={handleClickVelha} />
-            <Button title="Jogo da Forca" onPress={handleClickForca} />
-            <Button title="Jogo da Memória" onPress={handleClickMemoria} />
+            <Button color="#e01f1f" title="Jogo da Velha" onPress={handleClickVelha} />
+            <Button color="#3bcbdb" title="Jogo da Forca" onPress={handleClickForca} />
+            <Button color="#1f6ce0" title="Jogo da Memória" onPress={handleClickMemoria} />
+           
         </View>
     )
 }
 
-const styles = StyleSheet({
+const styles = StyleSheet.create({
 
-    botao: {
-        backgroundColor: 'red',
-        width: 40,
-        height: 40,
-        margin: 2,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center"
+    div: {
+        gap: 3
     }
 })

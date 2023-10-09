@@ -49,12 +49,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    gap: 5
   },
   input: {
-    width: "80%",
-    height: 20,
-    borderStyle: "solid",
-    boderColor: "black",
-    borderWidth: 1,
+    border: "none",
+    padding: 1,
+    backgroundColor: '#e8e8e8',
   },
+   
 });

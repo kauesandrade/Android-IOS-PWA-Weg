@@ -93,6 +93,7 @@ export default function JGVelha({
 
     return (
         <View>
+            <View style={styles.header}>
             <Text>
                 Jogo da Velha
             </Text>
@@ -100,6 +101,7 @@ export default function JGVelha({
                 Vez do jogador: {getPlayerName()} - {vez}
             </Text>
             <Button title='Voltar' onPress={voltar} />
+            </View>
             {
                 state.map((linha, indexLinha) => {
                     return (
@@ -140,5 +142,8 @@ const styles = StyleSheet.create({
     botaoJogoFonte: {
         fontSize: 50,
         color: "#fff"
+    },
+    header: {
+        gap: 5  
     }
 });
