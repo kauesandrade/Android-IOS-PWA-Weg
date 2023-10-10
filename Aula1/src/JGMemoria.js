@@ -19,13 +19,13 @@ export default function ({
   changeScreen,
   player1,
   player2
-  
+
 }) {
 
   const [state, setState] = useState([...tabuleiro]);
   const [vez, setVez] = useState(player1);
-  const [selectCard, setSelectCard] = useState([0,0]);
-  const [selectCard2, setSelectCard2] = useState([0,0]);
+  const [selectCard, setSelectCard] = useState([0, 0]);
+  const [selectCard2, setSelectCard2] = useState([0, 0]);
   const [allCards, setAllcards] = useState([...cards, ...cards]);
   const [jogada, setJogada] = useState(0);
   const [pontos, setPontos] = useState([-1, 0]);
@@ -38,13 +38,13 @@ export default function ({
   }, []);
 
   useEffect(() => {
-    console.log("Card1 "+ selectCard[0], selectCard[1])
-    console.log("Card2 "+ selectCard2[0], selectCard2[1])
+    console.log("Card1 " + selectCard[0], selectCard[1])
+    console.log("Card2 " + selectCard2[0], selectCard2[1])
     console.log("All cards " + allCards[((selectCard[0]) * 5) + (selectCard[1])] + " / " + allCards[((selectCard2[0]) * 5) + (selectCard2[1])])
-  }, [selectCard, selectCard2]) 
+  }, [selectCard, selectCard2])
 
   useEffect(() => {
-    setTimeout(() => { 
+    setTimeout(() => {
       verificarJogada();
       setPodeJogar(true);
     }, 700)
@@ -55,13 +55,13 @@ export default function ({
     vericarWin();
   }, [pontos])
 
-  const vericarWin = () =>{
-    if(pontos[0] + pontos[1] == 25){
+  const vericarWin = () => {
+    if (pontos[0] + pontos[1] == 25) {
       pontos[0] > pontos[1] ? acabou(`Jogador ${player1} venceu!!`) : acabou(`Jogador ${player2} venceu!!`)
     }
   }
 
-  const acabou = (mensagem) =>{
+  const acabou = (mensagem) => {
     alert(mensagem);
     setState(tabuleiro);
     getRandomCards();
@@ -91,12 +91,12 @@ export default function ({
 
   const handleClickPosicao = (linha, coluna) => {
 
-    if(podeJogar == true){
+    if (podeJogar == true) {
       const novoState = [[...state[0]], [...state[1]], [...state[2]], [...state[3]], [...state[4]], [...state[5]], [...state[6]], [...state[7]], [...state[8]], [...state[9]]]
       novoState[linha][coluna] = allCards[((linha) * 5) + (coluna)];
       setState([...novoState]);
     }
-   
+
     if (state[linha][coluna] != "") {
       return;
     }
@@ -111,15 +111,15 @@ export default function ({
     }
   }
 
-  const voltar = () =>{
+  const voltar = () => {
     changeScreen("escolherNomes")
   }
 
-  const getSituacao = () =>{
-    if(vez == player1){
-      return "Vez do jogador: "+ player1
-    }else{
-      return "Vez do jogador: "+ player2
+  const getSituacao = () => {
+    if (vez == player1) {
+      return "Vez do jogador: " + player1
+    } else {
+      return "Vez do jogador: " + player2
     }
   }
 
@@ -153,7 +153,7 @@ export default function ({
           )
         })
       }
-      <Button title='Voltar' onPress={() => voltar()} />  
+      <Button title='Voltar' onPress={() => voltar()} />
     </View>
   )
 }
@@ -176,23 +176,23 @@ const styles = StyleSheet.create({
     color: "#fff"
   },
   titulo: {
-  fontSize: 30,
-  color: '#e01f1f',
-  fontWeight: 'bold',
-  marginBottom: 10,
-  display: "flex",
-  alignItems: 'center',
-  justifyContent: 'center'
-},
-paragrafo: {
-  fontSize: 20,
-  marginBottom: 5,
-  display: "flex",
-  alignItems: 'center',
-  justifyContent: 'center'
-},
-botaoVoltar: {
-  margin: 5
-}
+    fontSize: 30,
+    color: '#e01f1f',
+    fontWeight: 'bold',
+    marginBottom: 10,
+    display: "flex",
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  paragrafo: {
+    fontSize: 20,
+    marginBottom: 5,
+    display: "flex",
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  botaoVoltar: {
+    margin: 5
+  }
 
 });

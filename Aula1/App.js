@@ -10,20 +10,20 @@ import EscolherPalavra from './src/PgEscolherPalavra';
 
 export default function App() {
 
-  const[player1, setPlayer1] = useState("");
-  const[player2, setPlayer2] = useState("");
-  const[screen, setScreen] = useState("home");
-  const[nextScreen, setNextScreen] = useState("");
-  const[palavra, setPalavra] = useState("");
+  const [player1, setPlayer1] = useState("");
+  const [player2, setPlayer2] = useState("");
+  const [screen, setScreen] = useState("home");
+  const [nextScreen, setNextScreen] = useState("");
+  const [palavra, setPalavra] = useState("");
 
   const checkScreen = (screenName) => screenName === screen;
 
-  const setJogadores = (nome1, nome2) =>{
+  const setJogadores = (nome1, nome2) => {
     setPlayer1(nome1);
     setPlayer2(nome2);
   }
 
-  const mudarPalavra = (palavra1) =>{
+  const mudarPalavra = (palavra1) => {
     setPalavra(palavra1)
   }
 
@@ -33,36 +33,36 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      {checkScreen("escolherNomes") && 
-      (<EscolherNomes
-        mudarNomeJogadores = {setJogadores}
-        nextScreen = {nextScreen}
-        changeScreen = {changeScreen}
+      {checkScreen("escolherNomes") &&
+        (<EscolherNomes
+          mudarNomeJogadores={setJogadores}
+          nextScreen={nextScreen}
+          changeScreen={changeScreen}
         />
-      )}
+        )}
       {checkScreen("escolherPalavra") && (<EscolherPalavra
-      changeScreen = {changeScreen}
-      mudarPalavra = {mudarPalavra}
+        changeScreen={changeScreen}
+        mudarPalavra={mudarPalavra}
       />)}
       {checkScreen("jgVelha") && (<JgVelha
-      changeScreen = {changeScreen}
-      nextScreen = {nextScreen}
-      player1={player1}
-      player2={player2}
+        changeScreen={changeScreen}
+        nextScreen={nextScreen}
+        player1={player1}
+        player2={player2}
       />)}
       {checkScreen("home") && (<Home
-      changeScreen = {changeScreen}
-      setNextScreen = {setNextScreen}
+        changeScreen={changeScreen}
+        setNextScreen={setNextScreen}
       />)}
-      {checkScreen("jgMemoria") && (<JgMemoria  
-        changeScreen = {changeScreen}
-        newScreen = {nextScreen}
-        player1 = {player1}
-        player2 = {player2}
+      {checkScreen("jgMemoria") && (<JgMemoria
+        changeScreen={changeScreen}
+        newScreen={nextScreen}
+        player1={player1}
+        player2={player2}
       />)}
       {checkScreen("jgForca") && (<JgForca
-      changeScreen = {changeScreen}
-      palavra = {palavra}
+        changeScreen={changeScreen}
+        palavra={palavra}
       />)}
     </View>
   );

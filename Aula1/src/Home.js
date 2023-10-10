@@ -25,7 +25,7 @@ export default function ({
             <Button color="#e01f1f" title="Jogo da Velha" onPress={handleClickVelha} />
             <Button color="#3bcbdb" title="Jogo da Forca" onPress={handleClickForca} />
             <Button color="#1f6ce0" title="Jogo da Memória" onPress={handleClickMemoria} />
-           
+
         </View>
     )
 }

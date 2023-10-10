@@ -94,34 +94,34 @@ export default function JGVelha({
     return (
         <View style={styles.header}>
             <View style={styles.section}>
-            <Text style={styles.titulo}>
-                Jogo da Velha
-            </Text>
-            <Text style={styles.paragrafo}>
-                Vez do jogador: {getPlayerName()} - {vez}
-            </Text>
-            <Button title='Voltar' onPress={voltar} />
+                <Text style={styles.titulo}>
+                    Jogo da Velha
+                </Text>
+                <Text style={styles.paragrafo}>
+                    Vez do jogador: {getPlayerName()} - {vez}
+                </Text>
+                <Button title='Voltar' onPress={voltar} />
             </View>
             <View>
-            {
-                state.map((linha, indexLinha) => {
-                    return (
-                        <View style={styles.linha} key={indexLinha}>
-                            {linha.map((coluna, indexColuna) =>
-                                <TouchableOpacity key={`${indexLinha}${indexColuna}${coluna}`}
-                                    onPress={() => handleClickPosicao(indexLinha, indexColuna)}
-                                >
-                                    <View style={styles.botaoJogo}>
-                                        <Text style={styles.botaoJogoFonte}>
-                                            {coluna}
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                        </View>
-                    )
-                })
-            }
+                {
+                    state.map((linha, indexLinha) => {
+                        return (
+                            <View style={styles.linha} key={indexLinha}>
+                                {linha.map((coluna, indexColuna) =>
+                                    <TouchableOpacity key={`${indexLinha}${indexColuna}${coluna}`}
+                                        onPress={() => handleClickPosicao(indexLinha, indexColuna)}
+                                    >
+                                        <View style={styles.botaoJogo}>
+                                            <Text style={styles.botaoJogoFonte}>
+                                                {coluna}
+                                            </Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                )}
+                            </View>
+                        )
+                    })
+                }
             </View>
         </View>
     )
