@@ -125,14 +125,13 @@ export default function ({
 
   return (
     <View>
-      <Text>
+      <Text style={styles.titulo}>
         Jogo da Velha
       </Text>
-      <Button title='Voltar' onPress={() => voltar()} />
-      <Text>
+      <Text style={styles.paragrafo}>
         {getSituacao()}
       </Text>
-      <Text>
+      <Text style={styles.paragrafo}>
         Pontos: {player1} : {pontos[0]} X {player2} : {pontos[1]}
       </Text>
       {
@@ -154,6 +153,7 @@ export default function ({
           )
         })
       }
+      <Button title='Voltar' onPress={() => voltar()} />  
     </View>
   )
 }
@@ -174,5 +174,25 @@ const styles = StyleSheet.create({
   botaoJogoFonte: {
     fontSize: 25,
     color: "#fff"
-  }
+  },
+  titulo: {
+  fontSize: 30,
+  color: '#e01f1f',
+  fontWeight: 'bold',
+  marginBottom: 10,
+  display: "flex",
+  alignItems: 'center',
+  justifyContent: 'center'
+},
+paragrafo: {
+  fontSize: 20,
+  marginBottom: 5,
+  display: "flex",
+  alignItems: 'center',
+  justifyContent: 'center'
+},
+botaoVoltar: {
+  margin: 5
+}
+
 });

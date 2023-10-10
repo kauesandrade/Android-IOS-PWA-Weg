@@ -92,16 +92,17 @@ export default function JGVelha({
     const getPlayerName = () => vez === "X" ? player1 : player2;
 
     return (
-        <View>
-            <View style={styles.header}>
-            <Text>
+        <View style={styles.header}>
+            <View style={styles.section}>
+            <Text style={styles.titulo}>
                 Jogo da Velha
             </Text>
-            <Text>
+            <Text style={styles.paragrafo}>
                 Vez do jogador: {getPlayerName()} - {vez}
             </Text>
             <Button title='Voltar' onPress={voltar} />
             </View>
+            <View>
             {
                 state.map((linha, indexLinha) => {
                     return (
@@ -121,17 +122,28 @@ export default function JGVelha({
                     )
                 })
             }
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
+    titulo: {
+        fontSize: 30,
+        color: '#e01f1f',
+        fontWeight: 'bold',
+        marginBottom: 20
+    },
+    paragrafo: {
+        fontSize: 20,
+        marginBottom: 20
+    },
     linha: {
         display: "flex",
         flexDirection: "row"
     },
     botaoJogo: {
-        backgroundColor: 'red',
+        backgroundColor: '#e01f1f',
         width: 80,
         height: 80,
         margin: 2,
@@ -143,7 +155,13 @@ const styles = StyleSheet.create({
         fontSize: 50,
         color: "#fff"
     },
+    section: {
+        gap: 5,
+        display: "flex",
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     header: {
-        gap: 5  
+        gap: 5
     }
 });

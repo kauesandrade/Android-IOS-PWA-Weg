@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Text, View, Button, TextInput } from 'react-native';
+import { Text, View, Button, TextInput, StyleSheet } from 'react-native';
 
 export default function({
     changeScreen,
@@ -23,14 +23,30 @@ export default function({
     const [palavra, setPalavra] = useState("")
 
     return(
-        <View>
+        <View style={styles.container}>
             <Text>
                 Escolha uma palavra para a forca:
             </Text>
-            <TextInput placeholder='digite um palavra' onChangeText={setPalavra}/>
+            <TextInput style={styles.input} placeholder='digite um palavra' onChangeText={setPalavra}/>
             <Button title='Jogar' onPress={handleClickJogar}/>
             <Button title='Voltar para o menu' onPress={handleClickVoltar}/>
 
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 5
+    },
+    input: {
+      border: "none",
+      padding: 1,
+      backgroundColor: '#e8e8e8',
+    },
+     
+  });

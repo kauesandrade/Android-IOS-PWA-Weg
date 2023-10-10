@@ -100,24 +100,33 @@ export default function({
 
     return (
         <View style={styles.container}>
-          <Text style={styles.header}>Jogo da Forca</Text>
+          <View>
+            <Text style={styles.header}>Jogo da Forca</Text>
           
-          <Image
-            style={styles.hangMan}
-            source = {require(""+image)}
-          />
-
-          <Text style={styles.tries}>Tentativas restantes: {tentativas}</Text>
-          <Text style={styles.word}>Chutes: {letrasEscolhidas}</Text>
-          <Text style={styles.word}>Palavra: {mascaraPalavra}</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite uma letra"
-            value={chute}
-            onChangeText={(text) => setChute(text)}
-          />
-          <Button title="Adivinhar" onPress={handleClickChutar} />
-          <Button title="Voltar" onPress={handleClickVoltar}/>
+            <Image
+              style={styles.hangMan}
+              source = {require(""+image)}
+            />
+          </View>
+         
+          <View>
+            <Text style={styles.tentativas}>Tentativas restantes: {tentativas}</Text>
+            <Text style={styles.palavra}>Chutes: {letrasEscolhidas}</Text>
+            <Text style={styles.palavra}>Palavra: {mascaraPalavra}</Text>
+          </View>
+          <View>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite uma letra"
+              value={chute}
+              onChangeText={(text) => setChute(text)}
+            />
+          </View>
+     
+          <View style={styles.button}>
+            <Button title="Adivinhar" onPress={handleClickChutar} />
+            <Button title="Voltar" onPress={handleClickVoltar}/>
+          </View>
         </View>
       );
     };
@@ -127,19 +136,24 @@ export default function({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        gap: 2
       },
       header: {
         fontSize: 24,
         fontWeight: 'bold',
         marginBottom: 20,
+        color: "#3bcbdb",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
       },
-      tries: {
+      tentativas: {
         fontSize: 18,
-        marginBottom: 10,
+        marginBottom: 5,
       },
-      word: {
+      palavra: {
         fontSize: 24,
-        marginBottom: 20,
+        marginBottom: 5,
       },
       input: {
         borderWidth: 1,
@@ -153,4 +167,7 @@ export default function({
         width: 250,
         height: 250,
       },
+      button: {
+        gap: 5
+      }
     });
