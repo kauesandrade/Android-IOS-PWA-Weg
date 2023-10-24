@@ -9,7 +9,6 @@ import UseMemo from "./src/UseMemo";
 export default function Home({
     changeScreen
 }) {
-
     return (
         <View style={styles.div} >
             <Text>
