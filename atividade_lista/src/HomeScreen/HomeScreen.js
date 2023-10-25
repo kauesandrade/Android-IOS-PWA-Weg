@@ -1,5 +1,5 @@
-import { View, Button } from "react-native/types";
-
+import { useEffect, useState } from "react";
+import { Button, Text, View } from "react-native";
 
 const HomeScreen = ({ navigation }) =>{
 
@@ -7,7 +7,8 @@ const HomeScreen = ({ navigation }) =>{
     return(
         <View>
             <Button 
-                title="AddTask" 
+                title="Add Task"
+                onPress={() => navigation.navigate("Add Task")}
             />
         </View>
     );
