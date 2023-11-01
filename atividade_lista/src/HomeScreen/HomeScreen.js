@@ -37,7 +37,7 @@ const HomeScreen = ({ navigation }) =>{
                 }
             </View>
         )
-    }, []);
+    }, [tasks]);
 
     return(
         <View>
