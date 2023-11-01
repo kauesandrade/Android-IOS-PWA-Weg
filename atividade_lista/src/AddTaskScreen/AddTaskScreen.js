@@ -3,11 +3,18 @@ import { View, Text, TextInput, Button } from "react-native"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import metadata from './../storage.medata.json';
 
-const AddTaskScreen = ({ navigation }) => {
+const AddTaskScreen = ({ route, navigation }) => {
 
+    if(route.params){
+        const { id } = route.params ;
+    }
+    
     const [taskName, setTaskName] = useState('');
 
-    useEffect(() => { console.log(taskName) }, [taskName])
+    useEffect(() => { 
+        console.log(taskName) 
+        console.log("ID: " + id) 
+    }, [taskName])
 
     const handleClick = () => {
         saveName();
@@ -17,7 +24,7 @@ const AddTaskScreen = ({ navigation }) => {
         const newTask = {
             taskName: taskName,
             itens: [],
-            date: Date()
+            date: new Date().toLocaleString()
         };
         try {
             const jsonData = (newTask);

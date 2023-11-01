@@ -20,23 +20,34 @@ const HomeScreen = ({ navigation }) =>{
 
     const array = useMemo(()=>{
         console.log("Passou pelo use Memo")
-        return(
-            <View>
-                {
 
-                    tasks.map((index, i)=> {
-                        console.log("Passou no map")
-                        return(
-                            <View>
-                                <Text>
-                                    TASK {i}º: {tasks[i].taskName} - {tasks[i].date} 
-                                </Text>
-                            </View>
-                        )
-                    })
-                }
-            </View>
-        )
+        if(tasks){
+            return(
+                <View>
+                    {
+                        tasks.map((index, i)=> {
+                            console.log("Passou no map")
+                            return(
+                                <View>
+                                    <Text>
+                                        TASK {i + 1}º: {tasks[i].taskName} - {tasks[i].date}
+                                    </Text>
+                                    <Button  title="Editar" onPress={() => navigation.navigate("Add Task", {id: i})}/>
+                                    <Button  title="Remover" />
+                                </View>
+                            )
+                        })
+                    }
+                </View>
+            )
+        }else{
+            return(
+                <View>
+                    
+                </View>
+            )
+        }
+       
     }, [tasks]);
 
     return(
