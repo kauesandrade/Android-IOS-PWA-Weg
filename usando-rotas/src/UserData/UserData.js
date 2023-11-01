@@ -18,6 +18,7 @@ const UserData = () => {
     const saveUserName = async () => {
         const saveName = name || "";
         await AsyncStorage.setItem(metadata.USER.USERNAME, saveName);
+        
     }
 
     return (
