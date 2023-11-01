@@ -6,27 +6,23 @@ import metadata from './../storage.medata.json';
 // await AsyncStorage.removeItem(metadata.TASK.TASK);
 
 const HomeScreen = ({ navigation }) =>{
-
     const [tasks, setTasks] = useState([]);
     const focus = useIsFocused();
     useEffect(() => { getTasks() }, [focus]);
 
     const getTasks = async () =>{
+        // await AsyncStorage.removeItem(metadata.TASK.TASK);
         const tasks = JSON.parse(await AsyncStorage.getItem(metadata.TASK.TASK));
         console.log(tasks)
-        console.log()
         setTasks(tasks);
     }
 
     const array = useMemo(()=>{
-        console.log("Passou pelo use Memo")
-
         if(tasks){
             return(
                 <View>
                     {
                         tasks.map((index, i)=> {
-                            console.log("Passou no map")
                             return(
                                 <View>
                                     <Text>

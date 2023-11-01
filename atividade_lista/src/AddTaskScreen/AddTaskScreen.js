@@ -1,46 +1,70 @@
 import { useEffect, useState } from "react";
 import { View, Text, TextInput, Button } from "react-native"
+import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import metadata from './../storage.medata.json';
 
 const AddTaskScreen = ({ route, navigation }) => {
 
-    if(route.params){
-        const { id } = route.params ;
-    }
-    
     const [taskName, setTaskName] = useState('');
 
-    useEffect(() => { 
-        console.log(taskName) 
-        console.log("ID: " + id) 
+    const focus = useIsFocused();
+    useEffect(() => { setNameTask() }, [focus]);
+
+    useEffect(() => {
+        console.log(taskName)
+
     }, [taskName])
 
     const handleClick = () => {
         saveName();
     }
 
-    const saveName = async () => {
-        const newTask = {
-            taskName: taskName,
-            itens: [],
-            date: new Date().toLocaleString()
-        };
-        try {
-            const jsonData = (newTask);
+    const setNameTask = async () => {
+        if (route.params) {
+            const { id } = route.params;
+            console.log("ID: " + id)
             let existingTaks = await AsyncStorage.getItem(metadata.TASK.TASK);
             let existingTaksJSON = existingTaks ? JSON.parse(existingTaks) : [];
-            const updatedTaks = [...existingTaksJSON, jsonData];
-            await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(updatedTaks));
-
-            // console.log(jsonData.date);
-            // console.log(jsonData.itens);
-            // console.log(jsonData.taskName);
-
-            voltar();
-        } catch (e) {
-            console.log(e)
+            console.log(existingTaksJSON[id].taskName);
+            setTaskName(existingTaksJSON[id].taskName);
         }
+
+    }
+
+    const saveName = async () => {
+
+        if (!route.params) {
+            const newTask = {
+                taskName: taskName,
+                itens: [],
+                date: new Date().toLocaleString()
+            };
+            try {
+                const jsonData = (newTask);
+                let existingTaks = await AsyncStorage.getItem(metadata.TASK.TASK);
+                let existingTaksJSON = existingTaks ? JSON.parse(existingTaks) : [];
+                const updatedTaks = [...existingTaksJSON, jsonData];
+                await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(updatedTaks));
+                voltar();
+                // console.log(jsonData.date);
+                // console.log(jsonData.itens);
+                // console.log(jsonData.taskName);
+
+
+            } catch (e) {
+                console.log(e)
+            }
+
+        } else {
+            let existingTaks = await AsyncStorage.getItem(metadata.TASK.TASK);
+            let existingTaksJSON = existingTaks ? JSON.parse(existingTaks) : [];
+            existingTaksJSON[0].taskName = taskName;
+            const updatedTaks = [...existingTaksJSON];
+            await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(updatedTaks));
+            voltar();
+        }
+
     }
 
     const voltar = () => {
