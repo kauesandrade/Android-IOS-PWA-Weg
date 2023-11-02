@@ -13,11 +13,13 @@ const HomeScreen = ({ navigation }) =>{
     const getTasks = async () =>{
         // await AsyncStorage.removeItem(metadata.TASK.TASK);
         const tasks = JSON.parse(await AsyncStorage.getItem(metadata.TASK.TASK));
-        console.log(tasks)
+        console.log(tasks);
         setTasks(tasks);
     }
     const deleteTask = async (i) =>{
-        const tasks = JSON.parse(await AsyncStorage.getItem(metadata.TASK.TASK));
+        tasks.splice(i, 1);
+        await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
+        getTasks();
     }
 
     const array = useMemo(()=>{
@@ -28,7 +30,7 @@ const HomeScreen = ({ navigation }) =>{
                         tasks.map((index, i)=> {
                             return(
                                 <View>
-                                    <Text>
+                                    <Text onPress={() => navigation.navigate("Task", {id: i})}>
                                         TASK {i + 1}º: {tasks[i].taskName} - {tasks[i].date}
                                     </Text>
                                     <Button  title="Editar" onPress={() => navigation.navigate("Add Task", {id: i})}/>

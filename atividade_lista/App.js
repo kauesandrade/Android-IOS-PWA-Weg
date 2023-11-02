@@ -17,7 +17,7 @@ export default function App() {
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="Task" component={TaskScreen} />
       <Stack.Screen name="Add Task" component={AddTaskScreen} />
-      <Stack.Screen name=" Add Item" component={AddItemScreen} />
+      <Stack.Screen name="Add Item" component={AddItemScreen} />
     </Stack.Navigator>
   </NavigationContainer>
   );

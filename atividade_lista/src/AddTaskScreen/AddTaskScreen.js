@@ -25,13 +25,12 @@ const AddTaskScreen = ({ route, navigation }) => {
         if (route.params) {
             const { id } = route.params;
             setID(id);
-            console.log("ID: " + id)
+            // console.log("ID: " + id)
             let existingTaks = await AsyncStorage.getItem(metadata.TASK.TASK);
             let existingTaksJSON = existingTaks ? JSON.parse(existingTaks) : [];
-            console.log(existingTaksJSON[id].taskName);
+            // console.log(existingTaksJSON[id].taskName);
             setTaskName(existingTaksJSON[id].taskName);
         }
-
     }
 
     const saveName = async () => {
