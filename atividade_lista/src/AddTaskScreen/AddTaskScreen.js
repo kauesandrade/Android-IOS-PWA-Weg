@@ -7,6 +7,7 @@ import metadata from './../storage.medata.json';
 const AddTaskScreen = ({ route, navigation }) => {
 
     const [taskName, setTaskName] = useState('');
+    const [ID, setID] = useState(0);
 
     const focus = useIsFocused();
     useEffect(() => { setNameTask() }, [focus]);
@@ -23,6 +24,7 @@ const AddTaskScreen = ({ route, navigation }) => {
     const setNameTask = async () => {
         if (route.params) {
             const { id } = route.params;
+            setID(id);
             console.log("ID: " + id)
             let existingTaks = await AsyncStorage.getItem(metadata.TASK.TASK);
             let existingTaksJSON = existingTaks ? JSON.parse(existingTaks) : [];
@@ -47,10 +49,6 @@ const AddTaskScreen = ({ route, navigation }) => {
                 const updatedTaks = [...existingTaksJSON, jsonData];
                 await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(updatedTaks));
                 voltar();
-                // console.log(jsonData.date);
-                // console.log(jsonData.itens);
-                // console.log(jsonData.taskName);
-
 
             } catch (e) {
                 console.log(e)
@@ -59,7 +57,7 @@ const AddTaskScreen = ({ route, navigation }) => {
         } else {
             let existingTaks = await AsyncStorage.getItem(metadata.TASK.TASK);
             let existingTaksJSON = existingTaks ? JSON.parse(existingTaks) : [];
-            existingTaksJSON[0].taskName = taskName;
+            existingTaksJSON[ID].taskName = taskName;
             const updatedTaks = [...existingTaksJSON];
             await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(updatedTaks));
             voltar();
