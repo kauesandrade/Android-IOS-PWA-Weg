@@ -16,6 +16,9 @@ const HomeScreen = ({ navigation }) =>{
         console.log(tasks)
         setTasks(tasks);
     }
+    const deleteTask = async (i) =>{
+        const tasks = JSON.parse(await AsyncStorage.getItem(metadata.TASK.TASK));
+    }
 
     const array = useMemo(()=>{
         if(tasks){
@@ -29,7 +32,7 @@ const HomeScreen = ({ navigation }) =>{
                                         TASK {i + 1}º: {tasks[i].taskName} - {tasks[i].date}
                                     </Text>
                                     <Button  title="Editar" onPress={() => navigation.navigate("Add Task", {id: i})}/>
-                                    <Button  title="Remover" />
+                                    <Button  title="Remover" onPress={() => deleteTask(i)}/>
                                 </View>
                             )
                         })
