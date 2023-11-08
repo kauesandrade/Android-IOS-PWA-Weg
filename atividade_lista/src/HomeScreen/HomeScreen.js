@@ -12,10 +12,11 @@ const HomeScreen = ({ navigation }) =>{
 
     const getTasks = async () =>{
         // await AsyncStorage.removeItem(metadata.TASK.TASK);
-        const tasks = JSON.parse(await AsyncStorage.getItem(metadata.TASK.TASK));
-        console.log(tasks);
-        setTasks(tasks);
+        const existingTaksJSON = JSON.parse(await AsyncStorage.getItem(metadata.TASK.TASK));
+        console.log(existingTaksJSON);
+        setTasks(existingTaksJSON);
     }
+
     const deleteTask = async (i) =>{
         tasks.splice(i, 1);
         await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
@@ -30,10 +31,10 @@ const HomeScreen = ({ navigation }) =>{
                         tasks.map((index, i)=> {
                             return(
                                 <View>
-                                    <Text onPress={() => navigation.navigate("Task", {id: i})}>
+                                    <Text onPress={() => navigation.navigate("Task", {idTask: i})}>
                                         TASK {i + 1}º: {tasks[i].taskName} - {tasks[i].date}
                                     </Text>
-                                    <Button  title="Editar" onPress={() => navigation.navigate("Add Task", {id: i})}/>
+                                    <Button  title="Editar" onPress={() => navigation.navigate("Add Task", {idTask: i})}/>
                                     <Button  title="Remover" onPress={() => deleteTask(i)}/>
                                 </View>
                             )

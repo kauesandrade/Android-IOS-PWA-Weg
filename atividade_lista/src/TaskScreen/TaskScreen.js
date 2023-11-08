@@ -6,71 +6,70 @@ import metadata from './../storage.medata.json';
 
 const TaskScreen = ({ route, navigation }) => {
 
-    const { id } = route.params;
-    const [ID, setID] = useState(0);
+    const [IDTask, setIDTask] = useState(0);
     const [itens, setItens] = useState([])
     const [tasks, setTasks] = useState([])
     const [taskName, setTaskName] = useState("");
 
     const focus = useIsFocused();
-    useEffect(() => { getTasks() }, [focus]);
+    useEffect(() => { getItens() }, [focus]);
 
-    const getTasks = async () =>{
-        if (route.params) {
-            const { id } = route.params;
-            setID(id);
-            let existingTaks = await AsyncStorage.getItem(metadata.TASK.TASK);
-            let existingTaksJSON = existingTaks ? JSON.parse(existingTaks) : [];
-            setTaskName(existingTaksJSON[id].taskName);
+
+    const getItens = async () => {
+        const { idTask } = route.params;
+        if(route.params){
+            setIDTask(idTask);
+            const existingTaksJSON = JSON.parse(await AsyncStorage.getItem(metadata.TASK.TASK));
             setTasks(existingTaksJSON);
-            setItens(existingTaksJSON[id].itens);
+            setTaskName(existingTaksJSON[idTask].taskName);
+            setItens(existingTaksJSON[idTask].itens);
         }
     }
 
-    const deleteItem = async (i) =>{
+    const deleteItem = async (i) => {
         itens.splice(i, 1);
-        tasks[ID].itens = itens
+        tasks[IDTask].itens = itens
         await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
-        getTasks();
+        getItens();
     }
 
-    const array = useMemo(()=>{
-        if(itens){
-            return(
+    const array = useMemo(() => {
+        if (itens) {
+            return (
                 <View>
                     {
-                        itens.map((index, i)=> {
-                            return(
+                        itens.map((index, i) => {
+                            return (
                                 <View>
                                     <Text>
-                                        TASK {i + 1}º: {itens[i].taskName} - {itens[i].date}
+                                        TASK {i + 1}º: {itens[i].itemName} - {itens[i].date}
                                     </Text>
-                                    <Button  title="Editar" onPress={() => navigation.navigate("Add Task", {id: i, idTask: ID})}/>
-                                    <Button  title="Remover" onPress={() => deleteItem(i)}/>
+                                    <Button title="Editar" onPress={() => navigation.navigate("Add Item", { idTask: IDTask, idItem: i  })} />
+                                    <Button title="Remover" onPress={() => deleteItem(i)} />
                                 </View>
                             )
                         })
                     }
                 </View>
             )
-        }else{
-            return(
+        } else {
+            return (
                 <View>
-                    
+
                 </View>
             )
         }
-       
-    }, [tasks]);
 
-    return(
+    }, [itens]);
+
+    return (
         <View>
             <Text>
                 TaskScreen: {taskName}
             </Text>
-            <Button 
+            <Button
                 title="Add Item"
-                onPress={() => navigation.navigate("Add Item", {ID: i})}
+                onPress={() => navigation.navigate("Add Item", { idTask: IDTask })}
             />
             {array}
         </View>
