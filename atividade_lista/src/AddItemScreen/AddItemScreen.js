@@ -11,9 +11,27 @@ const AddItemScreen = ({ route, navigation }) => {
     const [task, setTask] = useState({});
     const [tasks, setTasks] = useState([]);
 
+    function sortTasksByDateDescending(tasks) {
+        return tasks.sort((a, b) => {
+
+            console.log(a)
+            console.log(a.date)
+            console.log(b)
+            console.log(b.date)
+            if(new Date(a.date) >= new Date(b.date)){
+                console.log("asdasd")
+                return -1
+            }else{
+                console.log("cu")
+                return 1
+            }
+        });
+    }
+
     useEffect(()=>{
         console.log(itemName)
     },[itemName])
+    
 
     const focus = useIsFocused();
     useEffect(() => { setNameTask() }, [focus]);
@@ -23,22 +41,16 @@ const AddItemScreen = ({ route, navigation }) => {
     }
 
     const setNameTask = async () => {
-        console.log("passou set")
         if (route.params) {
-            console.log("passou set e if") 
             const { idTask, idItem } = route.params;
             setIDTask(idTask);
             const existingTaksJSON = JSON.parse(await AsyncStorage.getItem(metadata.TASK.TASK));
             setTasks(existingTaksJSON);
             setIDItem(idItem);
-            console.log("ID Item: " + IDItem);
             if(idItem>=0){
                 setItemName(existingTaksJSON[idTask].itens[idItem].itemName);
-                console.log("ITENS NAME: "+itemName);
             }
             setTask[existingTaksJSON[idTask]];
-            console.log("TASK: " + task);
-            
         }
     }
 
@@ -46,18 +58,24 @@ const AddItemScreen = ({ route, navigation }) => {
 
         if (IDItem >= 0) {
             tasks[IDTask].itens[IDItem].itemName = itemName;
-            await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
+            tasks[IDTask].itens[IDItem].date = new Date();
+            tasks[IDTask].date = new Date();
+            let sortItens = sortTasksByDateDescending(tasks[IDTask].itens);
+            tasks[IDTask].itens = [...sortItens];
+            let sortTasks = sortTasksByDateDescending(tasks);
+            await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(sortTasks));
             voltar();
 
         }
         else {
             const newItem = {
                 itemName: itemName,
-                date: new Date().toLocaleString()
+                date: new Date()
             };
             try {
                 const jsonData = (newItem);
-                tasks[IDTask].itens = [...tasks[IDTask].itens, jsonData] 
+                tasks[IDTask].itens = [...tasks[IDTask].itens, jsonData]
+                tasks[IDTask].date = new Date().toLocaleString()
                 await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
                 voltar();
 
@@ -76,7 +94,7 @@ const AddItemScreen = ({ route, navigation }) => {
                 Add/Edit ItemScreen
             </Text>
             <TextInput placeholder="Name from My new Item" value={itemName} onChangeText={setItemName} />
-            <Button title="Add Task" onPress={handleClick} />
+            <Button title={IDItem >= 0 ? "Edit" + " Task": "Add" + " Task"} onPress={handleClick} />
         </View>
     )
 }

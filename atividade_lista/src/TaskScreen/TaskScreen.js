@@ -42,7 +42,7 @@ const TaskScreen = ({ route, navigation }) => {
                             return (
                                 <View>
                                     <Text>
-                                        TASK {i + 1}º: {itens[i].itemName} - {itens[i].date}
+                                        TASK {i + 1}º: {itens[i].itemName} - {(itens[i].date).toLocaleString()}
                                     </Text>
                                     <Button title="Editar" onPress={() => navigation.navigate("Add Item", { idTask: IDTask, idItem: i  })} />
                                     <Button title="Remover" onPress={() => deleteItem(i)} />
