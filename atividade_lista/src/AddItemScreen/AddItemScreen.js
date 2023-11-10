@@ -6,8 +6,8 @@ import metadata from './../storage.medata.json';
 const AddItemScreen = ({ route, navigation }) => {
 
     const [itemName, setItemName] = useState('');
-    const [IDItem, setIDItem] = useState(0);
-    const [IDTask, setIDTask] = useState(0);
+    const [IDItem, setIDItem] = useState();
+    const [IDTask, setIDTask] = useState();
     const [task, setTask] = useState({});
     const [tasks, setTasks] = useState([]);
 
@@ -23,14 +23,16 @@ const AddItemScreen = ({ route, navigation }) => {
     }
 
     const setNameTask = async () => {
+        console.log("passou set")
         if (route.params) {
+            console.log("passou set e if") 
             const { idTask, idItem } = route.params;
             setIDTask(idTask);
             const existingTaksJSON = JSON.parse(await AsyncStorage.getItem(metadata.TASK.TASK));
             setTasks(existingTaksJSON);
             setIDItem(idItem);
             console.log("ID Item: " + IDItem);
-            if(idItem){
+            if(idItem>=0){
                 setItemName(existingTaksJSON[idTask].itens[idItem].itemName);
                 console.log("ITENS NAME: "+itemName);
             }
@@ -42,7 +44,13 @@ const AddItemScreen = ({ route, navigation }) => {
 
     const saveName = async () => {
 
-        if (!itemName) {
+        if (IDItem >= 0) {
+            tasks[IDTask].itens[IDItem].itemName = itemName;
+            await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
+            voltar();
+
+        }
+        else {
             const newItem = {
                 itemName: itemName,
                 date: new Date().toLocaleString()
@@ -56,12 +64,6 @@ const AddItemScreen = ({ route, navigation }) => {
             } catch (e) {
                 console.log(e)
             }
-
-        }
-        else {
-            tasks[IDTask].itens[IDItem].itemName = itemName;
-            await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
-            voltar();
         }
     }
     const voltar = () => {
