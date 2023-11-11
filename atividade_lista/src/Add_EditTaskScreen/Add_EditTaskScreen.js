@@ -26,22 +26,22 @@ const Add_EditTaskScreen = ({ route, navigation }) => {
             setTaskName(existingTaksJSON[idTask].taskName);
 
         }
-        
+
     }
 
     const saveName = async () => {
 
         if (IDTask >= 0) {
-            if(tasks[IDTask].taskName != taskName){
+            if (tasks[IDTask].taskName != taskName) {
                 tasks[IDTask].date = new Date();
                 tasks[IDTask].taskName = taskName;
                 await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
             }
             voltar();
-            
-        } 
+
+        }
         else {
-            if(taskName){
+            if (taskName) {
                 const newTask = {
                     taskName: taskName,
                     itens: [],
@@ -52,14 +52,14 @@ const Add_EditTaskScreen = ({ route, navigation }) => {
                     const updatedTaks = [...tasks, jsonData];
                     await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(updatedTaks));
                     voltar();
-    
+
                 } catch (e) {
                     console.log(e);
                 }
-            }else{
+            } else {
                 Alert.alert("Inexistent name", "Enter a name to add the task");
             }
-            
+
 
         }
 
@@ -71,14 +71,14 @@ const Add_EditTaskScreen = ({ route, navigation }) => {
 
     return (
         <View style={styles.container}>
-        <Text style={styles.text}>
-            Add/Edit Task
-        </Text>
-        <TextInput style={styles.textInput} placeholder="Name from My new Task" value={taskName} onChangeText={setTaskName} />
-        <Pressable style={styles.button} onPress={() => { handleClick() }}>
-            <Text style={styles.buttonText}>{IDTask >= 0 ? "Edit" : "Add"} task</Text>
-        </Pressable>
-    </View>
+            <Text style={styles.text}>
+                Add/Edit Task
+            </Text>
+            <TextInput style={styles.textInput} placeholder="Name from My new Task" value={taskName} onChangeText={setTaskName} />
+            <Pressable style={styles.button} onPress={() => { handleClick() }}>
+                <Text style={styles.buttonText}>{IDTask >= 0 ? "Edit" : "Add"} task</Text>
+            </Pressable>
+        </View>
     )
 }
 
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
         flex: 1,
         gap: 15,
         padding: 15,
-        backgroundColor: '#DEE5E5',
+        backgroundColor: '#cce3de',
         alignItems: 'center',
         width: '100%'
     },
@@ -113,13 +113,14 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         padding: 10,
         overflow: 'hidden',
-        backgroundColor: '#78CDD7',
+        backgroundColor: '#6b9080',
         borderRadius: 10
     },
     buttonText: {
         fontSize: 16,
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
+        color: '#fff'
     }
 });
 

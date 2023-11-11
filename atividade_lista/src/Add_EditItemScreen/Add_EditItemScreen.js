@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         flex: 1,
         gap: 15,
         padding: 15,
-        backgroundColor: '#DEE5E5',
+        backgroundColor: '#cce3de',
         alignItems: 'center',
         width: '100%'
     },
@@ -115,13 +115,14 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         padding: 10,
         overflow: 'hidden',
-        backgroundColor: '#78CDD7',
+        backgroundColor: '#6b9080',
         borderRadius: 10
     },
     buttonText: {
         fontSize: 16,
         fontWeight: 'bold',
-        textAlign: 'center'
+        textAlign: 'center',
+        color: '#fff'
     }
 });
 
