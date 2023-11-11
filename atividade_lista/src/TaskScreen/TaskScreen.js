@@ -64,7 +64,7 @@ const TaskScreen = ({ route, navigation }) => {
                                     </Text>
                                     <Button title="Editar" onPress={() => {
                                         setAsyncStorage()
-                                        navigation.navigate("Add Item", { idTask: IDTask, idItem: i  })
+                                        navigation.navigate("Add/Edit Item", { idTask: IDTask, idItem: i  })
                                     }} />
                                     <Button title="Remover" onPress={() => deleteItem(i)} />
                                 </View>
@@ -90,7 +90,7 @@ const TaskScreen = ({ route, navigation }) => {
             </Text>
             <Button
                 title="Add Item"
-                onPress={() => navigation.navigate("Add Item", { idTask: IDTask })}
+                onPress={() => navigation.navigate("Add/Edit Item", { idTask: IDTask })}
             />
             {array}
         </View>

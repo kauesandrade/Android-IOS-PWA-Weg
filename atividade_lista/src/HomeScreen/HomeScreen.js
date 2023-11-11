@@ -54,7 +54,7 @@ const HomeScreen = ({ navigation }) =>{
                                     </Text>
                                     <Button  title="Editar" onPress={() =>{
                                         setAsyncStorage()
-                                        navigation.navigate("Add Task", {idTask: i})
+                                        navigation.navigate("Add/Edit Task", {idTask: i})
                                     }}/>
                                     <Button  title="Remover" onPress={() => deleteTask(i)}/>
                                 </View>
@@ -77,7 +77,7 @@ const HomeScreen = ({ navigation }) =>{
         <View>
             <Button 
                 title="Add Task"
-                onPress={() => navigation.navigate("Add Task")}
+                onPress={() => navigation.navigate("Add/Edit Task")}
             />
 
             {array}

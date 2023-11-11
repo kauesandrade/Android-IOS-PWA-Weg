@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native"
+import { StyleSheet, View, Text, TextInput, Pressable, Alert } from "react-native"
 import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import metadata from './../storage.medata.json';
+import metadata from '../storage.medata.json';
 
-const AddTaskScreen = ({ route, navigation }) => {
+const Add_EditTaskScreen = ({ route, navigation }) => {
 
     const [IDTask, setIDTask] = useState();
     const [taskName, setTaskName] = useState("");
@@ -70,14 +70,57 @@ const AddTaskScreen = ({ route, navigation }) => {
     }
 
     return (
-        <View>
-            <Text>
-                Add/Edit TaskScreen
-            </Text>
-            <TextInput placeholder="Name from My new list" value={taskName} onChangeText={setTaskName} />
-            <Button title={IDTask >= 0 ? "Edit" + " Task": "Add" + " Task"} onPress={handleClick} />
-        </View>
+        <View style={styles.container}>
+        <Text style={styles.text}>
+            Add/Edit Task
+        </Text>
+        <TextInput style={styles.textInput} placeholder="Name from My new Task" value={taskName} onChangeText={setTaskName} />
+        <Pressable style={styles.button} onPress={() => { handleClick() }}>
+            <Text style={styles.buttonText}>{IDTask >= 0 ? "Edit" : "Add"} task</Text>
+        </Pressable>
+    </View>
     )
 }
 
-export default AddTaskScreen;
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        gap: 15,
+        padding: 15,
+        backgroundColor: '#DEE5E5',
+        alignItems: 'center',
+        width: '100%'
+    },
+    text: {
+        color: '#0f0f0f',
+        fontSize: 20,
+        fontWeight: 'bold'
+    },
+    textInput: {
+        width: '90%',
+        borderWidth: 3,
+        borderColor: 'transparent',
+        borderStyle: 'solid',
+        padding: 20,
+        overflow: 'hidden',
+        backgroundColor: '#F3F3F3',
+        borderRadius: 10
+    },
+    button: {
+        width: '50%',
+        borderWidth: 3,
+        borderColor: 'transparent',
+        borderStyle: 'solid',
+        padding: 10,
+        overflow: 'hidden',
+        backgroundColor: '#78CDD7',
+        borderRadius: 10
+    },
+    buttonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center'
+    }
+});
+
+export default Add_EditTaskScreen;
