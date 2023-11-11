@@ -55,7 +55,7 @@ const TaskScreen = ({ route, navigation }) => {
     const array = useMemo(() => {
         if (itens) {
             return (
-                <View>
+                <View style={styles.containerArray}>
                     {
                         itens.map((index, i) => {
                             return (
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width: '90%',
+        width: '100%',
         borderWidth: 3,
         borderColor: 'transparent',
         borderStyle: 'solid',

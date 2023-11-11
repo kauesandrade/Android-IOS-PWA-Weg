@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        width: '109%',
+        width: '100%',
         borderWidth: 3,
         borderColor: 'transparent',
         borderStyle: 'solid',
