@@ -33,6 +33,10 @@ const TaskScreen = ({ route, navigation }) => {
         getItens();
     }
 
+    const TransformDate = (date) =>{
+        return date.toLocaleString();
+    }
+
     const array = useMemo(() => {
         if (itens) {
             return (
@@ -42,7 +46,7 @@ const TaskScreen = ({ route, navigation }) => {
                             return (
                                 <View>
                                     <Text>
-                                        TASK {i + 1}º: {itens[i].itemName} - {(itens[i].date).toLocaleString()}
+                                        TASK {i + 1}º: {itens[i].itemName} - {TransformDate(itens[i].date)}
                                     </Text>
                                     <Button title="Editar" onPress={() => navigation.navigate("Add Item", { idTask: IDTask, idItem: i  })} />
                                     <Button title="Remover" onPress={() => deleteItem(i)} />
