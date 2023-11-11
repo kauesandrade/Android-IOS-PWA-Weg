@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, TextInput, Button } from "react-native"
+import { View, Text, TextInput, Button, Alert } from "react-native"
 import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import metadata from './../storage.medata.json';
@@ -41,20 +41,25 @@ const AddTaskScreen = ({ route, navigation }) => {
             
         } 
         else {
-            const newTask = {
-                taskName: taskName,
-                itens: [],
-                date: new Date()
-            };
-            try {
-                const jsonData = (newTask);
-                const updatedTaks = [...tasks, jsonData];
-                await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(updatedTaks));
-                voltar();
-
-            } catch (e) {
-                console.log(e);
+            if(taskName){
+                const newTask = {
+                    taskName: taskName,
+                    itens: [],
+                    date: new Date()
+                };
+                try {
+                    const jsonData = (newTask);
+                    const updatedTaks = [...tasks, jsonData];
+                    await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(updatedTaks));
+                    voltar();
+    
+                } catch (e) {
+                    console.log(e);
+                }
+            }else{
+                Alert.alert("Inexistent name", "Enter a name to add the task");
             }
+            
 
         }
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, TextInput, Button } from "react-native"
+import { StyleSheet, View, Text, TextInput, Button, Alert } from "react-native"
 import { useIsFocused } from "@react-navigation/native";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import metadata from './../storage.medata.json';
@@ -44,20 +44,25 @@ const AddItemScreen = ({ route, navigation }) => {
 
         }
         else {
-            const newItem = {
-                itemName: itemName,
-                date: new Date()
-            };
-            try {
-                const jsonData = (newItem);
-                tasks[IDTask].itens = [...tasks[IDTask].itens, jsonData];
-                tasks[IDTask].date = new Date();
-                await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
-                voltar();
-
-            } catch (e) {
-                console.log(e);
+            if(itemName){
+                const newItem = {
+                    itemName: itemName,
+                    date: new Date()
+                };
+                try {
+                    const jsonData = (newItem);
+                    tasks[IDTask].itens = [...tasks[IDTask].itens, jsonData];
+                    tasks[IDTask].date = new Date();
+                    await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
+                    voltar();
+    
+                } catch (e) {
+                    console.log(e);
+                }
+            }else{
+                Alert.alert("Inexistent name", "Enter a name to add the item");
             }
+            
         }
     }
 
@@ -66,14 +71,32 @@ const AddItemScreen = ({ route, navigation }) => {
     }
 
     return (
-        <View>
-            <Text>
+        <View style={styles.container}>
+            <Text style={styles.text}>
                 Add/Edit ItemScreen
             </Text>
-            <TextInput placeholder="Name from My new Item" value={itemName} onChangeText={setItemName} />
-            <Button title={IDItem >= 0 ? "Edit" + " Task": "Add" + " Task"} onPress={handleClick} />
+            <TextInput style={styles.textInput} placeholder="Name from My new Item" value={itemName} onChangeText={setItemName} />
+            <Button style={styles.button} title={IDItem >= 0 ? "Edit" + " Task": "Add" + " Task"} onPress={handleClick} />
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+
+    },
+    text: {
+
+    },
+    textInput: {
+      flex: 1,
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    button: {
+
+    }
+  });
 
 export default AddItemScreen;
