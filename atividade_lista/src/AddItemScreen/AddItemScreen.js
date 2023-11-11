@@ -5,34 +5,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import metadata from './../storage.medata.json';
 const AddItemScreen = ({ route, navigation }) => {
 
-    const [itemName, setItemName] = useState('');
     const [IDItem, setIDItem] = useState();
     const [IDTask, setIDTask] = useState();
-    const [task, setTask] = useState({});
+    const [itemName, setItemName] = useState('');
     const [tasks, setTasks] = useState([]);
-
-    function sortTasksByDateDescending(tasks) {
-        return tasks.sort((a, b) => {
-
-            console.log(a)
-            console.log(a.date)
-            console.log(b)
-            console.log(b.date)
-            if(new Date(a.date) >= new Date(b.date)){
-                console.log("asdasd")
-                return -1
-            }else{
-                console.log("cu")
-                return 1
-            }
-        });
-    }
-
-    useEffect(()=>{
-        console.log(itemName)
-    },[itemName])
     
-
     const focus = useIsFocused();
     useEffect(() => { setNameTask() }, [focus]);
 
@@ -43,27 +20,26 @@ const AddItemScreen = ({ route, navigation }) => {
     const setNameTask = async () => {
         if (route.params) {
             const { idTask, idItem } = route.params;
-            setIDTask(idTask);
             const existingTaksJSON = JSON.parse(await AsyncStorage.getItem(metadata.TASK.TASK));
-            setTasks(existingTaksJSON);
+            setTasks([...existingTaksJSON]);
             setIDItem(idItem);
+            setIDTask(idTask);
             if(idItem>=0){
                 setItemName(existingTaksJSON[idTask].itens[idItem].itemName);
             }
-            setTask[existingTaksJSON[idTask]];
         }
     }
 
     const saveName = async () => {
 
         if (IDItem >= 0) {
-            tasks[IDTask].itens[IDItem].itemName = itemName;
-            tasks[IDTask].itens[IDItem].date = new Date();
-            tasks[IDTask].date = new Date();
-            let sortItens = sortTasksByDateDescending(tasks[IDTask].itens);
-            tasks[IDTask].itens = [...sortItens];
-            let sortTasks = sortTasksByDateDescending(tasks);
-            await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(sortTasks));
+
+            if(tasks[IDTask].itens[IDItem].itemName != itemName){
+                tasks[IDTask].itens[IDItem].itemName = itemName;
+                tasks[IDTask].itens[IDItem].date = new Date();
+                tasks[IDTask].date = new Date();
+                await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
+            }
             voltar();
 
         }
@@ -74,16 +50,17 @@ const AddItemScreen = ({ route, navigation }) => {
             };
             try {
                 const jsonData = (newItem);
-                tasks[IDTask].itens = [...tasks[IDTask].itens, jsonData]
-                tasks[IDTask].date = new Date().toLocaleString()
+                tasks[IDTask].itens = [...tasks[IDTask].itens, jsonData];
+                tasks[IDTask].date = new Date();
                 await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
                 voltar();
 
             } catch (e) {
-                console.log(e)
+                console.log(e);
             }
         }
     }
+
     const voltar = () => {
         navigation.navigate("Task", { idTask: IDTask });
     }

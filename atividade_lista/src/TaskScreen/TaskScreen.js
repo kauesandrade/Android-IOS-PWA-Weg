@@ -20,9 +20,9 @@ const TaskScreen = ({ route, navigation }) => {
         if(route.params){
             setIDTask(idTask);
             const existingTaksJSON = JSON.parse(await AsyncStorage.getItem(metadata.TASK.TASK));
-            setTasks(existingTaksJSON);
+            setTasks([...existingTaksJSON]);
             setTaskName(existingTaksJSON[idTask].taskName);
-            setItens(existingTaksJSON[idTask].itens);
+            setItens([...sortTasksByDateDescending(existingTaksJSON[idTask].itens)]);
         }
     }
 
@@ -33,8 +33,22 @@ const TaskScreen = ({ route, navigation }) => {
         getItens();
     }
 
-    const TransformDate = (date) =>{
-        return date.toLocaleString();
+    const TransformDate = (date) =>{ 
+        return new Date(date).toLocaleString();
+    }
+
+    function sortTasksByDateDescending(tasks){
+        return tasks.sort((a, b) => {
+            if(new Date(a.date) >= new Date(b.date)){
+                return -1
+            }else{
+                return 1
+            }
+        });
+    }
+
+    const setAsyncStorage = async () =>{
+        await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
     }
 
     const array = useMemo(() => {
@@ -48,7 +62,10 @@ const TaskScreen = ({ route, navigation }) => {
                                     <Text>
                                         TASK {i + 1}º: {itens[i].itemName} - {TransformDate(itens[i].date)}
                                     </Text>
-                                    <Button title="Editar" onPress={() => navigation.navigate("Add Item", { idTask: IDTask, idItem: i  })} />
+                                    <Button title="Editar" onPress={() => {
+                                        setAsyncStorage()
+                                        navigation.navigate("Add Item", { idTask: IDTask, idItem: i  })
+                                    }} />
                                     <Button title="Remover" onPress={() => deleteItem(i)} />
                                 </View>
                             )

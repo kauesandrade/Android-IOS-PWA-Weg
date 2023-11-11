@@ -11,16 +11,31 @@ const HomeScreen = ({ navigation }) =>{
     useEffect(() => { getTasks() }, [focus]);
 
     const getTasks = async () =>{
-        // await AsyncStorage.removeItem(metadata.TASK.TASK);
         const existingTaksJSON = JSON.parse(await AsyncStorage.getItem(metadata.TASK.TASK));
-        console.log(existingTaksJSON);
-        setTasks(existingTaksJSON);
+        setTasks([...sortTasksByDateDescending(existingTaksJSON)]);
     }
 
     const deleteTask = async (i) =>{
         tasks.splice(i, 1);
         await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
         getTasks();
+    }
+    const TransformDate = (date) =>{ 
+        return new Date(date).toLocaleString();
+    }
+
+    function sortTasksByDateDescending(tasks){
+        return tasks.sort((a, b) => {
+            if(new Date(a.date) >= new Date(b.date)){
+                return -1
+            }else{
+                return 1
+            }
+        });
+    }
+
+    const setAsyncStorage = async () =>{
+        await AsyncStorage.setItem(metadata.TASK.TASK, JSON.stringify(tasks));
     }
 
     const array = useMemo(()=>{
@@ -31,10 +46,16 @@ const HomeScreen = ({ navigation }) =>{
                         tasks.map((index, i)=> {
                             return(
                                 <View>
-                                    <Text onPress={() => navigation.navigate("Task", {idTask: i})}>
-                                        TASK {i + 1}º: {tasks[i].taskName} - {tasks[i].date}
+                                    <Text onPress={() => {
+                                        setAsyncStorage()
+                                        navigation.navigate("Task", {idTask: i})
+                                    }}>
+                                        TASK {i + 1}º: {tasks[i].taskName} - {TransformDate(tasks[i].date)}
                                     </Text>
-                                    <Button  title="Editar" onPress={() => navigation.navigate("Add Task", {idTask: i})}/>
+                                    <Button  title="Editar" onPress={() =>{
+                                        setAsyncStorage()
+                                        navigation.navigate("Add Task", {idTask: i})
+                                    }}/>
                                     <Button  title="Remover" onPress={() => deleteTask(i)}/>
                                 </View>
                             )
